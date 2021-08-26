@@ -6,8 +6,8 @@ export interface findUserReturn {
     tag: string,
     createdTimestamp: number,
     createdAt: Date,
-    avatar({ size }: { size?: number } = {}): string,
-    banner: string,
+    avatarURL({ size }: { size?: number } = {}): string,
+    bannerURL({ size }: { size?: number } = {}): string,
     banner_color: string,
     accent_color: number
 }

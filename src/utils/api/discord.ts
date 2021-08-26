@@ -26,10 +26,12 @@ async function getUser(client: Client, id: string): Promise<findUserReturn> {
         tag: `${response.username}#${response.discriminator}`,
         createdTimestamp: snowflake(response.id).timestamp,
         createdAt: new Date(response.createdTimestamp),
-        avatar({ size }: { size?: number } = {}) {
-            return `${client.options.http.cdn}/avatars/${response.id}/${response.avatar}.${/^a_/.test(response.avatar) ? 'gif' : 'png'}${size ? `?size=${size}` : ''}`;
+        avatarURL({ size }: { size?: number } = {}) {
+            return response.avatar ? `${client.options.http.cdn}/avatars/${response.id}/${response.avatar}.${/^a_/.test(response.avatar) ? 'gif' : 'png'}${size ? `?size=${size}` : ''}` : null;
         },
-        banner: response.banner,
+        bannerURL({ size }: { size?: number } = {}) {
+            return response.banner ? `${client.options.http.cdn}/banners/${response.id}/${response.banner}.${/^a_/.test(response.banner) ? 'gif' : 'png'}${size ? `?size=${size}` : ''}` : null;
+        },
         banner_color: response.banner_color,
         accent_color: response.accent_color
     };
