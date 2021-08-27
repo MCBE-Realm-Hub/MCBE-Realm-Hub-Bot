@@ -8,6 +8,7 @@ class ClientExtention extends Client {
     public slashCommands: Collection<string, slashCommand> = new Collection();
     public slashCommandData: Array<slashCommandData> = [];
     public commands = new Collection();
+    logger: import("c:/Users/roman/Documents/GitHub/MCBE-Realm-Hub-Bot/src/utils/logger").default;
 
     public async init(token: string): Promise<void> {
         this.login(token);
@@ -28,13 +29,13 @@ class ClientExtention extends Client {
      */
     private async _eventHandler(dir?: string): Promise<void> {
         const eventPath = path.join(__dirname, "..", `events${dir ? `/${dir}` : ''}`);
-        if(!existsSync(eventPath)) return console.log(`[Event] [Error] ❌ ${eventPath} couldn't be found`);
+        if(!existsSync(eventPath)) return this.logger.error(`[Event] ${eventPath} couldn't be found`);
         readdirSync(eventPath).forEach(async (file: any) => {
             const { event } = await import(`${eventPath}/${file}`);
             event.once
             ? this.once(event.name, (...args) => event.execute(this, ...args))
             : this.on(event.name, (...args) => event.execute(this, ...args));
-            console.log(`[Event] ✔️ Loaded: ${event.name}`)
+            this.logger.success(`[Event] Loaded: ${event.name}`)
         });
     };
     /**
@@ -43,12 +44,12 @@ class ClientExtention extends Client {
      */
     private async _slashCommandHandler(dir?: string): Promise<void> {
         const commandPath = path.join(__dirname, "..", `slashCommands${dir ? `/${dir}` : ''}`);
-        if(!existsSync(commandPath)) return console.log(`[Slash Command] [Error] ❌ ${commandPath} couldn't be found`);
+        if(!existsSync(commandPath)) return this.logger.error(`[Slash Command] ${commandPath} couldn't be found`);
         readdirSync(commandPath).forEach(async (file: any) => {
             const { command } = await import(`${commandPath}/${file}`);
             this.slashCommands.set(command.data.name, command);
             this.slashCommandData.push(command.data.toJSON());
-            console.log(`[Slash Command] ✔️ Loaded: ${command.data.name}`);
+            this.logger.success(`[Slash Command] Loaded: ${command.data.name}`);
         });
     };
     /**
@@ -61,9 +62,9 @@ class ClientExtention extends Client {
         this.slashCommandData.forEach((json: slashCommandData) => {
             try {
                 client.application.commands.create(json, guildID);
-                console.log(`[Slash Command] ✔️ Successfully deployed: ${json?.name}`);
+                this.logger.success(`[Slash Command] Successfully deployed: ${json?.name}`);
             } catch(err) {
-                console.log(err);
+                this.logger.error(err);
             };
         });
     };

@@ -8,7 +8,7 @@ export const event: Event = {
         /**
          * Deploy Development slash commands
          */
-        client.deployDevelopmentSlashCommands(client, '617248060627746816');
+        client.deployDevelopmentSlashCommands(client, '866606673372119091');
         const twitchURL = "https://www.twitch.tv/notbeertv";
         const botStatus: Array<botStatus> = [
             {
@@ -40,6 +40,6 @@ export const event: Event = {
         }; 
         setInterval(randomStatus, 15000);
         randomStatus();
-        console.log(`${client.user.username} is online!`);
+        client.logger.success(`${client.user.username} is online!`);
     }
 };
