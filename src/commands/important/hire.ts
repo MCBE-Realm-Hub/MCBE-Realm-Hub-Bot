@@ -16,6 +16,7 @@ export const command: Command = {
     dmOnly: true,
     category: 'Important',
     name: 'hire',
+    description: 'Use this command to submit a post in **MCBE Realm Hub** server that will tell others you are looking to hire!',
     cooldown: '1 hour',
     async execute(client, message, args) {
         const dmChannel = await message.channel.send(`Hey, I will guide you through the process of uploading a hiring post! You may **cancel** this process anytime by simply typing \`${prefix}cancel\`.`);
