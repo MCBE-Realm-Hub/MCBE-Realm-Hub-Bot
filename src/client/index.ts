@@ -2,13 +2,16 @@ import path from 'path';
 import { existsSync, readdirSync } from 'fs';
 import { Client, Collection } from "discord.js";
 
-import { slashCommand, slashCommandData } from "../@types/index";
+import { SlashCommand, SlashCommandData, Command } from "../@types/index";
 
+import { Logger } from '../utils/logger';
+import { discordAPI } from '../utils/api/discord';
 class ClientExtention extends Client {
-    public slashCommands: Collection<string, slashCommand> = new Collection();
-    public slashCommandData: Array<slashCommandData> = [];
-    public commands = new Collection();
-    logger: import("c:/Users/roman/Documents/GitHub/MCBE-Realm-Hub-Bot/src/utils/logger").default;
+    public slashCommands: Collection<string, SlashCommand> = new Collection();
+    public slashCommandData: Array<SlashCommandData> = [];
+    public commands: Collection<string, Command> = new Collection();
+    public logger: Logger = new Logger();
+    public discordApi: discordAPI = new discordAPI();
 
     public async init(token: string): Promise<void> {
         this.login(token);
@@ -17,11 +20,10 @@ class ClientExtention extends Client {
          */
         this._eventHandler('client');
         this._eventHandler('server');
-
         /**
-         * Get to all the command files
+         * Getting all the command files
          */
-        this._slashCommandHandler('test');
+        this._commandHandler('important');
     };
     /**
      * 
@@ -54,12 +56,25 @@ class ClientExtention extends Client {
     };
     /**
      * 
+     * @param dir Your directory name
+     */
+    private async _commandHandler(dir?: string): Promise<void> {
+        const commandPath = path.join(__dirname, "..", `commands${dir ? `/${dir}` : ''}`);
+        if(!existsSync(commandPath)) return this.logger.error(`[Command] ${commandPath} couldn't be found`);
+        readdirSync(commandPath).forEach(async (file: any) => {
+            const { command } = await import(`${commandPath}/${file}`);
+            this.commands.set(command.name, command);
+            this.logger.success(`[Command] Loaded: ${command.name}`);
+        });
+    };
+    /**
+     * 
      * @param client Constructed client class
      * @param guildID The guild ID to deploy the commands on
      */
     public deployDevelopmentSlashCommands(client: this, guildID: string): void {
         client.application.commands.set([]);
-        this.slashCommandData.forEach((json: slashCommandData) => {
+        this.slashCommandData.forEach((json: SlashCommandData) => {
             try {
                 client.application.commands.create(json, guildID);
                 this.logger.success(`[Slash Command] Successfully deployed: ${json?.name}`);

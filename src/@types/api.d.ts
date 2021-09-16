@@ -1,4 +1,4 @@
-export interface findUserReturn {
+export interface FindUser {
     id: string,
     bot?: boolean,
     username: string,
@@ -11,3 +11,6 @@ export interface findUserReturn {
     banner_color: string,
     accent_color: number
 }
+export interface imageURLOptions {
+    size?: number
+};

@@ -1,4 +1,4 @@
-export interface botStatus {
+export interface BotStatus {
     statusType: statusType,
     URL?: string,
     statusMessage: string

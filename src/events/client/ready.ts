@@ -1,16 +1,16 @@
-import Client from '../../client';
-import { Event, botStatus } from "../../@types/index";
+import { Event, BotStatus } from "../../@types/index";
+import { logins } from '../../private/settings.json';
 
 export const event: Event = {
     name: 'ready',
     once: true,
-    async execute(client: Client) {
+    async execute(client) {
         /**
          * Deploy Development slash commands
          */
-        client.deployDevelopmentSlashCommands(client, '866606673372119091');
-        const twitchURL = "https://www.twitch.tv/notbeertv";
-        const botStatus: Array<botStatus> = [
+        client.deployDevelopmentSlashCommands(client, logins.developmentSlashCommandGuildID);
+        const twitchURL = "https://www.twitch.tv/mcbe_realm_hub";
+        const botStatus: Array<BotStatus> = [
             {
                 statusType: "STREAMING",
                 URL: twitchURL,

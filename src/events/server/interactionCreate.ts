@@ -1,10 +1,9 @@
-import Client from '../../client';
 import { Event } from "../../@types/index";
 import { CommandInteraction } from 'discord.js';
 
 export const event: Event = {
     name: 'interactionCreate',
-    async execute(client: Client, interaction: CommandInteraction) {
+    async execute(client, interaction: CommandInteraction) {
         if(!interaction.isCommand()) return;
         const slashCommand: any = client.slashCommands.get(interaction.commandName);
         if(!slashCommand) return;
