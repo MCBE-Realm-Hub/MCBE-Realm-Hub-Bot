@@ -60,7 +60,7 @@ function compressNumber(number: number): string | number {
  *  MS(172800000);                    //Output: 2 days
  */
 function MS(value: string | number, { compact }: { compact?: boolean } = {}): any {
-    if(typeof value === 'string') return timeToMs(value);
+    if(typeof value === 'string') return timeToMs(value.toLowerCase());
     if(typeof value === 'number') return msToTime(value, compact ? true : false);
 };
 /**
@@ -131,7 +131,7 @@ function compareString(firstStr: string, secondStr: string): number {
 
 function bestStringMatch(mainString: string, targetArray: Array<string>): number {
     const bestSoFar = [];
-    let bestMatchIndex = null;
+    let bestMatchIndex = 0;
 
     for(let i = 0; i < targetArray.length; i++) {
         const currentBest = compareString(mainString, targetArray[i]);

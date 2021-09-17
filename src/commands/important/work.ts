@@ -1,4 +1,5 @@
 import { MessageEmbed } from "discord.js";
+import color from '../../assets/hex_colors.json';
 import { Command } from "../../@types";
 import { prefix } from '../../private/settings.json';
 import { MS } from "../../utils/formatter";
@@ -19,7 +20,7 @@ export const command: Command = {
     dmOnly: true,
     category: 'Important',
     name: 'work',
-    description: 'Use this command to submit a post in **MCBE Realm Hub** server that will tell others you are looking to be hired!',
+    description: 'Use this command to submit a post in "MCBE Realm Hub" server that will tell others you are looking to be hired!',
     cooldown: '1 hour',
     async execute(client, message, args) {
         const dmChannel = await message.channel.send(`Hey, I will guide you through the process of uploading a hiring post! You may **cancel** this process anytime by simply typing \`${prefix}cancel\`.`);
@@ -28,7 +29,7 @@ export const command: Command = {
 
         const embed = new MessageEmbed()
             .setAuthor(message.author.tag, message.author.displayAvatarURL())
-            .setColor('#2F3136')
+            .setColor(`#${color.discord_dark}`)
             .setFooter("MCBE Realm Hub")
             .setTimestamp();
         let atQuestion = 0;
