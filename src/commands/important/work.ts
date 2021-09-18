@@ -42,6 +42,13 @@ export const command: Command = {
                 timestamp.delete(message.author.id);
                 return collector.stop('canceled');
             };
+            switch(atQuestion) {
+                case 0:
+                    if(collectedMsg.match(noRegex)) embed.description = `${message.author} is looking for a **VOLUNTARY** developer!`;
+                    else if(collectedMsg.match(yesRegex)) embed.description = `${message.author} is looking for a **PAID** developer!`;
+                    else atQuestion--;
+                break;
+            };
         });
         collector.on('end', async (collected, reason) => {
             switch(reason) {

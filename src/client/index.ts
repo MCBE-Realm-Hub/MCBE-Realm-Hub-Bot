@@ -23,6 +23,7 @@ class ClientExtention extends Client {
         /**
          * Getting all the command files
          */
+        this._commandHandler('test');
         this._commandHandler('important');
         this._commandHandler('information');
     };
