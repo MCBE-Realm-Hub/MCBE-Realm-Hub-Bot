@@ -34,73 +34,80 @@ function compressNumber(number: number): string | number {
     return scaled.toFixed(1) + types[selectType];
 };
 
+function MS(value: string): number;
+function MS(value: number, { fullDuration, compactDuration }?: { fullDuration?: boolean, compactDuration?: boolean }): string;
 /**
- * Convert seconds, minutes, hours, days and week to milliseconds and vice versa
- * @param {string | number} value string time support: second, minute, hour, day, week.
- * @param {boolean} [compact] Return time string in a compact format
+ * Convert seconds, minutes, hours, days and weeks to milliseconds and vice versa
+ * @param {string | number} value - string time support: second, minute, hour, day, week.
+ * @param {boolean} [fullDuration] - Display the full duration
+ * @param {boolean} [compactDuration] - Write the duration format in short 
  * @returns {string | number | undefined}
  * @example MS('2 days')  //Output: 172800000
- *  MS('1d')      //Output: 86400000
- *  MS('10h')     //Output: 36000000
- *  MS('2.5 hrs') //Output: 9000000
- *  MS('2h')      //Output: 7200000
- *  MS('1m')      //Output: 60000
- *  MS('5s')      //Output: 5000
- *  MS('1y')      //Output: 31557600000
- *  MS('100')     //Output: 100
- *  MS('-3 days') //Output: -259200000
- *  MS('-1h')     //Output: -3600000
- *  MS('-200')    //Output: -200
+ * MS('1d')      //Output: 86400000
+ * MS('10h')     //Output: 36000000
+ * MS('2.5 hrs') //Output: 9000000
+ * MS('2h')      //Output: 7200000
+ * MS('1m')      //Output: 60000
+ * MS('5s')      //Output: 5000
+ * MS('1y')      //Output: 31557600000
+ * MS('100')     //Output: 100
+ * MS('-3 days') //Output: -259200000
+ * MS('-1h')     //Output: -3600000
+ * MS('-200')    //Output: -200
  *
  *  //Convert from Milliseconds
  *
- *  MS(86400000, { compact: true });  //Output: 1d
- *  MS(86400000);                     //Output: 1 day
- *  MS(172800000, { compact: true }); //Output: 2d
- *  MS(172800000);                    //Output: 2 days
+ * MS(86400000, { compact: true });  //Output: 1d
+ * MS(86400000);                     //Output: 1 day
+ * MS(172800000, { compact: true }); //Output: 2d
+ * MS(172800000);
  */
-function MS(value: string | number, { compact }: { compact?: boolean } = {}): any {
-    if(typeof value === 'string') return timeToMs(value.toLowerCase());
-    if(typeof value === 'number') return msToTime(value, compact ? true : false);
+function MS(value: string | number, { fullDuration, compactDuration }: { fullDuration?: boolean, compactDuration?: boolean } = {}): string | number | undefined {
+    try {
+        if(typeof value === 'string') return /^\d+$/.test(value) ? Number(value) : value.split(/(?<=\d+\s*?[smhdwy]).*?(?=\d+\s*?[smhdwy])/gi).reduce((a, b) => a + toMS(b), 0);
+        if(typeof value === 'number') return toDuration(value, { fullDuration, compactDuration });
+    } catch(error) {
+        throw new Error(error);
+    };
 };
 /**
- * 
- * @param {string} string Time to ms
+ * Convert Durations to milliseconds
+ * @param {string} string - Duration to convert
  * @returns {number}
  */
-function timeToMs(value: string): number {
-    if(!/^-?\s?\d*\.?\d*?\s?((years*?|yrs*?)|(weeks*?)|(days*?)|(hours*?|hrs*?)|(minutes*?|mins*?)|(seconds*?|secs*?)|(milliseconds*?|msecs*?|ms)|[smhdwy])$/.test(value)) return;
-    const number = parseFloat(value.replace(/[^-.0-9]+/g, ''));
-    if(/\d+(?=\s?(milliseconds?|msecs?|ms))/.test(value)) return number;
-    else if(/\d+(?=\s?s)/.test(value)) return number * 1000;
-    else if(/\d+(?=\s?m)/.test(value)) return number * 60000;
-    else if(/\d+(?=\s?h)/.test(value)) return number * 3.6e+6;
-    else if(/\d+(?=\s?d)/.test(value)) return number * 8.64e+7;
-    else if(/\d+(?=\s?w)/.test(value)) return number * 6.048e+8;
-    else if(/\d+(?=\s?y)/.test(value)) return number * 3.154e+10;
+function toMS(value: string): number {
+    if(!/^-?\s*?\d*\.?\d+\s*?(years?|yrs?|weeks?|days?|hours?|hrs?|minutes?|mins?|seconds?|secs?|milliseconds?|msecs?|ms|[smhdwy])\s*?$/i.test(value)) return;
+    const number = Number(value.replace(/[^-.0-9]+/g, ''));
+    value = value.replace(/\s+/g, '');
+    if(/\d+(?=ms|milliseconds?)/i.test(value)) return number;
+    else if(/\d+(?=s)/i.test(value)) return number * 1000;
+    else if(/\d+(?=m)/i.test(value)) return number * 60000;
+    else if(/\d+(?=h)/i.test(value)) return number * 3.6e+6;
+    else if(/\d+(?=d)/i.test(value)) return number * 8.64e+7;
+    else if(/\d+(?=w)/i.test(value)) return number * 6.048e+8;
+    else if(/\d+(?=y)/i.test(value)) return number * 3.154e+10;
 };
+
 /**
- * 
- * @param {number} ms Ms to Time
- * @param {boolean} [compact] Compact time format
+ * Convert milliseconds to durations
+ * @param {number} value - Millisecond to convert
+ * @param {boolean} [fullDuration] - Display the full duration
+ * @param {boolean} [compactDuration] - Write the duration format in short 
  * @returns {string}
  */
-function msToTime(ms: number, compact?: boolean): string {
-    let negative = Math.sign(ms) === -1, absMs = Math.abs(ms);
-    let seconds = absMs / 1000, minutes = absMs / 60000, hours = absMs / 3.6e+6, days = absMs / 8.64e+7, weeks = absMs / 6.048e+8;
-    if(absMs < 1000) return plural('ms', 'millisecond', negative, absMs, compact);
-    else if(seconds < 60) return plural('s', 'second', negative, seconds, compact);
-    else if(minutes < 60) return plural('m', 'minute', negative, minutes, compact);
-    else if(hours < 24) return plural('h', 'hour', negative, hours, compact);
-    else if(days < 7) return plural('d', 'day', negative, days, compact);
-    else return plural('w', 'week', negative, weeks, compact);
-};
-function plural(shortType: string, type: string, negative: boolean, number: number, compact: boolean): string {
-    number = Math.round(number);
-    let origNumb = `${negative ? '-' : ''}${number}`;
-    if(compact) return `${origNumb}${shortType}`;
-    if(number > 1) return `${origNumb} ${type}s`;
-    else return `${origNumb} ${type}`;
+function toDuration(value: number, { fullDuration, compactDuration }: { fullDuration?: boolean, compactDuration?: boolean } = {}): string {
+    const absMs = Math.abs(value);
+    const duration = [
+        { short: 'd', long: 'day', ms: Math.floor(absMs / 8.64e+7) },
+        { short: 'h', long: 'hour', ms: Math.floor(absMs / 3.6e+6) % 24 },
+        { short: 'm', long: 'minute', ms: Math.floor(absMs / 60000) % 60 },
+        { short: 's', long: 'second', ms: Math.floor(absMs / 1000) % 60 },
+        { short: 'ms', long: 'millisecond', ms: Math.floor(absMs) % 1000 },
+    ];
+    const mappedDuration = duration
+        .filter(obj => obj.ms !== 0)
+        .map(obj => `${Math.sign(value) === -1 ? '-' : ''}${compactDuration ? `${obj.ms}${obj.short}` : `${obj.ms} ${obj.long}${obj.ms === 1 ? '' : 's'}`}`);
+    return fullDuration ? mappedDuration.join(compactDuration ? ' ' : ', ') : mappedDuration[0];
 };
 
 function compareString(firstStr: string, secondStr: string): number {
