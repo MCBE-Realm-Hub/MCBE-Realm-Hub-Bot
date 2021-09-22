@@ -66,7 +66,7 @@ export const command: Command = {
 			if(infoCommand.description) commandInfoEmbed.addField(`**Description:**`, `\`${infoCommand.description}\``, true);
 			if(infoCommand.usage) commandInfoEmbed.addField(`**Usage:**`, `\`${prefix}${infoCommand.name} ${infoCommand.usage}\``, true);
 			if(infoCommand.example) commandInfoEmbed.addField(`**Example:**`, `\`${prefix}${infoCommand.example.join(`\n${prefix}`)}\``, true);
-			commandInfoEmbed.addField(`**Cooldown:**`, MS(MS(infoCommand.cooldown ? infoCommand.cooldown : '3 seconds'), { compact: false }));
+			commandInfoEmbed.addField(`**Cooldown:**`, MS(MS(infoCommand.cooldown ? infoCommand.cooldown : '3 seconds'), { compactDuration: false }));
 			message.channel.send({ embeds: [commandInfoEmbed] });
         };
     }

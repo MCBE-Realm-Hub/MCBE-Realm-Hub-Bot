@@ -14,6 +14,6 @@ export interface Command {
     description?: string,
     usage?: string, 
     example?: Array<string>,
-    cooldown?: string | number,
+    cooldown?: string,
     execute(client: Client, message: Message, args: Array<string>): any
 }

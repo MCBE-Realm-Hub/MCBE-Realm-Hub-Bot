@@ -8,11 +8,10 @@ import { cooldowns } from "../../events/server/commandHandler";
 const yesRegex = /^(\*{2})?yes*(\*{2})?$/i;
 const noRegex = /^(\*{2})?no*(\*{2})?$/i;
 const questions = [
-    'Are you looking for a **__single__** commission, **__multiple__** commissions or **__both__**?',
-    'What type of assets do you create? `For example: command-block, function, add-on, texture and building`',
-    'Please link **at least** one of your work or a portfolio. `For example: Youtube Video, Website or something else`',
-    'How **skilled** would you say you are on the **__assets__** you mentioned previously?',
-    'Tell me a bit about yourself. What are you looking forward to do and how experienced are you?',
+    'What type of assets do you create? `For example: command blocks, function, addons, textures and buildings`',
+    'What are you looking forward to do?',
+    'How **skilled** would you say you are on the **__assets__** you mentioned previously from?',
+    'Please link **at least one** of your work or a portfolio. `For example: Youtube Video, Website or something else`',
     'Do you want to submit the following post? (**Yes** / **No**)'
 ];
 
@@ -44,16 +43,38 @@ export const command: Command = {
             };
             switch(atQuestion) {
                 case 0:
-                    if(collectedMsg.match(noRegex)) embed.description = `${message.author} is looking for a **VOLUNTARY** developer!`;
-                    else if(collectedMsg.match(yesRegex)) embed.description = `${message.author} is looking for a **PAID** developer!`;
-                    else atQuestion--;
+                    embed.description = `${message.author} offers create ${collectedMsg}`;
+                break;
+                case 1: 
+                    embed.description += `\n\n${collectedMsg}`;
+                break;
+                case 2:
+                    if(!collectedMsg.match(/^\s*-?\s*\d*\.?\d+\s*$/)) {
+                        atQuestion--;
+                        msg.reply(`Ratings must be in number`);
+                    } else embed.addField('Ratings: ', collectedMsg);
+                break;
+                case 3:
+                    embed.addField('Portfolio', collectedMsg);
+                break;
+                case 4:
+                    if(collectedMsg.match(noRegex)) return collector.stop('canceled');
+                    else if(!collectedMsg.match(yesRegex)) atQuestion--;
                 break;
             };
+            if(atQuestion < questions.length - 1) {
+                atQuestion++;
+                dmChannel.channel.send(questions[atQuestion]);
+            } else return collector.stop('finished');
         });
         collector.on('end', async (collected, reason) => {
             switch(reason) {
                 case 'canceled':
                     dmChannel.channel.send("Successfully **canceled** the hiring form.");
+                break;
+                case 'finished':
+                    //TODO: Send it the the channel int eh server
+                    let jobChannel = client.guilds.cache.find(guild => guild.id === "753438334663000116").channels.cache.find(channel => channel.id === '821041141222342696');
                 break;
             };
         });
