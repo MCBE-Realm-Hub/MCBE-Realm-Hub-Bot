@@ -81,7 +81,7 @@ function MS(value: StringValue | number, { compactDuration, fullDuration, avoidD
     try {
         if(typeof value === 'string') {
             if(/^\d+$/.test(value)) return Number(value);
-            const durations = value.match(/-?\d*\.?\d+\s*?(years?|yrs?|weeks?|days?|hours?|hrs?|minutes?|mins?|seconds?|secs?|milliseconds?|msecs?|ms|[smhdwy])/gi);
+            const durations = value.match(/\s*-?\s*\d*\.?\d+\s*?(years?|yrs?|weeks?|days?|hours?|hrs?|minutes?|mins?|seconds?|secs?|milliseconds?|msecs?|ms|[smhdwy])/gi);
             return durations ? durations.reduce((a, b) => a + toMS(b), 0) : null;
         };
         if(typeof value === 'number') return toDuration(value, { compactDuration, fullDuration, avoidDuration });
