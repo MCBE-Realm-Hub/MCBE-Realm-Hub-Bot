@@ -1,4 +1,4 @@
-import { StringValue, compactUnitAnyCase, durationInterface } from "../@types/utils/formatter";
+import { StringValue, compactUnitAnyCase, durationInterface } from "../@types/utils/ms";
 
 function MS(value: StringValue): number;
 function MS(value: number, { compactDuration, fullDuration }?: { compactDuration?: boolean, fullDuration?: boolean }): string;
