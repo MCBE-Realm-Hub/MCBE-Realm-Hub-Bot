@@ -1,9 +1,10 @@
 import { Command } from "../../@types";
-import { MessageEmbed } from "discord.js";
+import { MessageEmbed, TextChannel } from "discord.js";
 import color from '../../assets/hex_colors.json';
 import { prefix } from '../../private/settings.json';
-import { MS } from "../../utils/formatter";
+import { MS } from "../../utils/ms";
 import { cooldowns } from "../../events/server/commandHandler";
+import { sleep } from "../../utils/scheduling";
 
 const yesRegex = /^(\*{2})?yes*(\*{2})?$/i;
 const noRegex = /^(\*{2})?no*(\*{2})?$/i;
@@ -30,7 +31,8 @@ export const command: Command = {
             .setFooter("MCBE Realm Hub")
             .setTimestamp();
         let atQuestion = 0;
-        await dmChannel.channel.send(questions[atQuestion]);
+        await sleep(3000);
+        dmChannel.channel.send(questions[atQuestion]);
         collector.on('collect', async msg => {
             if(msg.attachments.size) return;
             const collectedMsg = msg.content;
@@ -44,11 +46,13 @@ export const command: Command = {
                     if(collectedMsg.match(noRegex)) embed.description = `${message.author} is looking for a **VOLUNTARY** developer!`;
                     else if(collectedMsg.match(yesRegex)) embed.description = `${message.author} is looking for a **PAID** developer!`;
                     else atQuestion--;
+                    await sleep(1000);
                 break;
                 case 1:
                     if((embed.description + collectedMsg).length >= 6000) {
                         msg.reply(`Error: Type under 6000 characters`);
                         atQuestion--;
+                        await sleep(1000);
                     } else {
                         embed.description += `\n\n${collectedMsg}`;
                         dmChannel.channel.send({ embeds: [embed]});
@@ -70,7 +74,8 @@ export const command: Command = {
                     dmChannel.channel.send("Successfully **canceled** the hiring form.");
                 break;
                 case 'finished':
-                    dmChannel.channel.send({ embeds: [embed] });
+                    const channel = client.channels.cache.get("889647867583660073") as TextChannel;
+                    channel.send({ embeds: [embed] });
                 break;
             };
         });

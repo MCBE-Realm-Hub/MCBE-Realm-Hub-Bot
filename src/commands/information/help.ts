@@ -1,7 +1,8 @@
 import { Command } from "../../@types";
 import { MessageEmbed, Collection } from "discord.js";
 import { prefix } from '../../private/settings.json';
-import { bestStringMatch, compareString, MS } from "../../utils/formatter";
+import { bestStringMatch, compareString } from '../../utils/algorithm';
+import { MS } from "../../utils/ms";
 
 function categoryCommands(commands: Collection<string, Command>, category: string): string {
 	return commands.filter((cmd) => cmd.category == category && !cmd.disableCommand).map((cmd) => `\`${cmd.name}\``).sort().join(", ") || "`No commands found`";

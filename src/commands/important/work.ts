@@ -1,17 +1,18 @@
-import { MessageEmbed } from "discord.js";
+import { MessageEmbed, TextChannel } from "discord.js";
 import color from '../../assets/hex_colors.json';
 import { Command } from "../../@types";
 import { prefix } from '../../private/settings.json';
-import { MS } from "../../utils/formatter";
+import { MS } from "../../utils/ms";
 import { cooldowns } from "../../events/server/commandHandler";
+import { sleep } from "../../utils/scheduling";
 
 const yesRegex = /^(\*{2})?yes*(\*{2})?$/i;
 const noRegex = /^(\*{2})?no*(\*{2})?$/i;
 const questions = [
-    'What type of assets do you create? `For example: command blocks, function, addons, textures and buildings`',
+    'What are your skills based around?\nExample: **functions, textures, and models**',
     'What are you looking forward to do?',
     'How **skilled** would you say you are on the **__assets__** you mentioned previously from?',
-    'Please link **at least one** of your work or a portfolio. `For example: Youtube Video, Website or something else`',
+    'Please _link_ **at least one** of your work or a portfolio.',
     'Do you want to submit the following post? (**Yes** / **No**)'
 ];
 
@@ -22,7 +23,7 @@ export const command: Command = {
     description: 'Use this command to submit a post in "MCBE Realm Hub" server that will tell others you are looking to be hired!',
     cooldown: '1 hour',
     async execute(client, message, args) {
-        const dmChannel = await message.channel.send(`Hey, I will guide you through the process of uploading a hiring post! You may **cancel** this process anytime by simply typing \`${prefix}cancel\`.`);
+        const dmChannel = await message.channel.send(`Hey, I will guide you through the process of uploading a work post! You may **cancel** this process anytime by simply typing \`${prefix}cancel\`.`);
         const filter = (msg: any) => msg.author.id === message.author.id;
         const collector = dmChannel.channel.createMessageCollector({ filter, time: MS('59 minutes') });
 
@@ -32,8 +33,9 @@ export const command: Command = {
             .setFooter("MCBE Realm Hub")
             .setTimestamp();
         let atQuestion = 0;
-        await dmChannel.channel.send(questions[atQuestion]);
-        collector.on('collect', msg => {
+        await sleep(3000);
+        dmChannel.channel.send(questions[atQuestion]);
+        collector.on('collect', async msg => {
             if(msg.attachments.size) return;
             const collectedMsg = msg.content;
             if(collectedMsg.toLowerCase() === `${prefix}cancel`) {
@@ -41,21 +43,29 @@ export const command: Command = {
                 timestamp.delete(message.author.id);
                 return collector.stop('canceled');
             };
-            switch(atQuestion) {
+            switch (atQuestion) {
                 case 0:
-                    embed.description = `${message.author} offers create ${collectedMsg}`;
+                    embed.description = `${message.author} offers to create **${collectedMsg}**`;
                 break;
                 case 1: 
-                    embed.description += `\n\n${collectedMsg}`;
+                    embed.description += `\n\n**Description: **\n${collectedMsg}`;
                 break;
                 case 2:
                     if(!collectedMsg.match(/^\s*-?\s*\d*\.?\d+\s*$/)) {
+                        msg.reply(`Ratings must be in numbers`);
                         atQuestion--;
-                        msg.reply(`Ratings must be in number`);
-                    } else embed.addField('Ratings: ', collectedMsg);
+                        await sleep(1000);
+                    } else embed.addField('**Ratings: **', collectedMsg);
                 break;
                 case 3:
-                    embed.addField('Portfolio', collectedMsg);
+                    if(!collectedMsg.match(/^((https?):\/\/)?([w|W]{3}\.)+[a-zA-Z0-9\-\.]{3,}\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/)) {
+                        dmChannel.channel.send('Please provide a valid URL link!');
+                        atQuestion--;
+                        await sleep(1000);
+                    } else {
+                        embed.addField('**Portfolio: **', collectedMsg);
+                        dmChannel.channel.send({ embeds: [embed] })
+                    };
                 break;
                 case 4:
                     if(collectedMsg.match(noRegex)) return collector.stop('canceled');
@@ -73,8 +83,8 @@ export const command: Command = {
                     dmChannel.channel.send("Successfully **canceled** the hiring form.");
                 break;
                 case 'finished':
-                    //TODO: Send it the the channel int eh server
-                    let jobChannel = client.guilds.cache.find(guild => guild.id === "753438334663000116").channels.cache.find(channel => channel.id === '821041141222342696');
+                    const channel = client.channels.cache.get("889647867583660073") as TextChannel
+                    channel.send({ embeds: [embed] });
                 break;
             };
         });

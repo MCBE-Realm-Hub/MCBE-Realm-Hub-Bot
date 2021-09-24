@@ -8,7 +8,7 @@ export const event: Event = {
         /**
          * Deploy Development slash commands
          */
-        client.deployDevelopmentSlashCommands(client, logins.developmentSlashCommandGuildID);
+        client.deployDevelopmentSlashCommands(logins.developmentSlashCommandGuildID);
         const twitchURL = "https://www.twitch.tv/mcbe_realm_hub";
         const botStatus: Array<BotStatus> = [
             {

@@ -1,7 +1,7 @@
 import { Event } from "../../@types/index";
 import { Message, Collection } from 'discord.js';
 import { prefix } from '../../private/settings.json';
-import { MS } from "../../utils/formatter";
+import { MS } from "../../utils/ms";
 
 export const cooldowns = new Collection();
 
@@ -24,13 +24,13 @@ export const event: Event = {
         if(!cooldowns.has(command.name)) cooldowns.set(command.name, new Collection());
         const now = Date.now();
         const timestamps: any = cooldowns.get(command.name);
-        const cooldownAmount = MS(command.cooldown) || 3000;
+        const cooldownAmount = MS(command.cooldown || '3000');
 
         if(timestamps.has(message.author.id)) {
             const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
             if(now < expirationTime) {
                 const timeLeft = (expirationTime - now);
-                return message.reply(`Please wait \`${MS(timeLeft, { compact: false })}\` before reusing the \`${command.name}\` command.`).then(msg => setTimeout(() => msg.delete(), 10000)).catch(console.error);
+                return message.reply(`Please wait \`${MS(timeLeft)}\` before reusing the \`${command.name}\` command.`).then(msg => setTimeout(() => msg.delete(), 10000)).catch(console.error);
             };
         };
         timestamps.set(message.author.id, now);

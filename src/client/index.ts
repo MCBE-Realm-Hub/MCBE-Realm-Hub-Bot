@@ -23,7 +23,6 @@ class ClientExtention extends Client {
         /**
          * Getting all the command files
          */
-        this._commandHandler('test');
         this._commandHandler('important');
         this._commandHandler('information');
     };
@@ -74,11 +73,11 @@ class ClientExtention extends Client {
      * @param client Constructed client class
      * @param guildID The guild ID to deploy the commands on
      */
-    public deployDevelopmentSlashCommands(client: this, guildID: string): void {
-        client.application.commands.set([]);
+    public deployDevelopmentSlashCommands(guildID?: string): void {
+        this.application.commands.set([], guildID ?? null);
         this.slashCommandData.forEach((json: SlashCommandData) => {
             try {
-                client.application.commands.create(json, guildID);
+                this.application.commands.create(json, guildID ?? null);
                 this.logger.success(`[Slash Command] Successfully deployed: ${json?.name}`);
             } catch(err) {
                 this.logger.error(err);

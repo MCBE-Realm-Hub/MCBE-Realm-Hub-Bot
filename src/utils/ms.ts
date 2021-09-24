@@ -1,79 +1,5 @@
 import { StringValue, compactUnitAnyCase, durationInterface } from "../@types/utils/formatter";
 
-function getBinSlice(snowflake: string, start: number, end?: number) {
-    return parseInt(parseInt(snowflake).toString(2).slice(start, end), 2);
-};
-function snowflake(snowflake: string) {
-    return {
-        timestamp: 1420070400000 + getBinSlice(snowflake, 0, -22),
-        worker: getBinSlice(snowflake, -22, -17),
-        process: getBinSlice(snowflake, -17, -12),
-        increment: getBinSlice(snowflake, -12)
-    };
-};
-
-function toBytes(bytes: number): string {
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-    if(bytes === 0) return '0 Bytes';
-    const i = Math.floor(Math.log(bytes) / Math.log(1024));
-    return `${parseFloat((bytes / Math.pow(1024, i)).toFixed(2))} ${sizes[i]}`;
-};
-
-function trimArray(array: Array<any>, maxLength: number): Array<any> {
-    if(array.length > maxLength) {
-        const length = array.length - maxLength;
-        array = array.slice(0, maxLength);
-        array.push(`${length} more...`);
-    };
-    return array;
-};
-
-function compressNumber(number: number): string | number {
-    const types = ["", "k", "M", "G", "T", "P", "E", "Z", "Y"];
-    const selectType = Math.log10(number) / 3 | 0;
-    if(selectType == 0) return number;
-    let scaled = number / Math.pow(10, selectType * 3);
-    return scaled.toFixed(1) + types[selectType];
-};
-
-function compareString(firstStr: string, secondStr: string): number {
-    firstStr = firstStr.replace(/\s+/g, '');
-    secondStr = secondStr.replace(/\s+/g, '');
-
-    if(firstStr === secondStr) return 100;
-    if(firstStr.length < 2 || secondStr.length < 2) return 0;
-
-    let firstBigrams = new Map();
-    for(let i = 0; i < firstStr.length - 1; i++) {
-        const bigram = firstStr.substring(i, i + 2);
-        const count = firstBigrams.has(bigram) ? firstBigrams.get(bigram) + 1 : 1;
-        firstBigrams.set(bigram, count);
-    };
-
-    let intersectionSize = 0;
-    for(let i = 0; i < secondStr.length - 1; i++) {
-        const bigram = secondStr.substring(i, i + 2);
-        const count = firstBigrams.has(bigram) ? firstBigrams.get(bigram) : 0;
-        if(count > 0) {
-            firstBigrams.set(bigram, count - 1);
-            intersectionSize++;
-        };
-    };
-    return Math.floor((2.0 * intersectionSize) / (firstStr.length + secondStr.length - 2) * 100);
-};
-
-function bestStringMatch(mainString: string, targetArray: Array<string>): number {
-    const bestSoFar = [];
-    let bestMatchIndex = 0;
-
-    for(let i = 0; i < targetArray.length; i++) {
-        const currentBest = compareString(mainString, targetArray[i]);
-        bestSoFar.push({target: targetArray[i], rating: currentBest});
-        if(currentBest > bestSoFar[bestMatchIndex ? bestMatchIndex : 0].rating) bestMatchIndex = i;
-    };
-    return bestMatchIndex;
-};
-
 function MS(value: StringValue): number;
 function MS(value: number, { compactDuration, fullDuration }?: { compactDuration?: boolean, fullDuration?: boolean }): string;
 function MS(value: number, { fullDuration, avoidDuration }?: { compactDuration?: boolean, fullDuration: boolean, avoidDuration: Array<compactUnitAnyCase> }): string;
@@ -137,4 +63,4 @@ function isError(error: unknown): error is Error {
     return typeof error === 'object' && error !== null && 'message' in error;
 };
 
-export { snowflake, toBytes, trimArray, compressNumber, compareString, bestStringMatch, MS };
+export { MS };
