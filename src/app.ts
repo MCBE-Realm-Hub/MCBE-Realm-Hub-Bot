@@ -1,7 +1,5 @@
 import Client from './client';
 import { Intents } from 'discord.js';
-import { Config } from './@types/index';
-import configJSON from './private/config.json';
 
 const client = new Client({ 
     intents: [
@@ -12,5 +10,4 @@ const client = new Client({
     ], 
     partials: ["CHANNEL"]
 });
-const config: Config = configJSON;
 client.init(process.env.token);
