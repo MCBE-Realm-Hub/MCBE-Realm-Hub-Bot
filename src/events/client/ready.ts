@@ -17,12 +17,12 @@ export const event: Event = {
                 statusMessage: "@mention me!"
             },
             {
-                statusType: "WATCHING",
-                statusMessage: `over ${client.guilds.cache.size} servers`
-            },
-            {
                 statusType: "LISTENING",
                 statusMessage: `to ${client.channels.cache.size} channels`
+            },
+            {
+                statusType: "WATCHING",
+                statusMessage: `over ${client.users.cache.size} users`
             }
         ];
         var onIndex = 1;
