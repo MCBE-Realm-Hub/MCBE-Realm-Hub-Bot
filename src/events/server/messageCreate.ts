@@ -22,7 +22,7 @@ export const event: Event = {
                 await message.react('👍');
                 await message.react('👎');
             } catch(e) {};
-            message.startThread({ name: 'Discussion', autoArchiveDuration: 'MAX' });
+            message.startThread({ name: `${message.author.username}'s creation`, autoArchiveDuration: 'MAX' });
             message.crosspost();
         };
         //Suggestion channel
@@ -39,7 +39,7 @@ export const event: Event = {
                 await embedMsg.react('<:downvote:821114932049215579>');
                 message.delete();
             } catch(e) {};
-            embedMsg.startThread({ name: 'Discussion', autoArchiveDuration: 'MAX' });
+            embedMsg.startThread({ name: `${message.author.username}'s suggestion`, autoArchiveDuration: 'MAX' });
         };
     }
 };
