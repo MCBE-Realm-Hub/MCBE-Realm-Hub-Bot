@@ -7,7 +7,7 @@ export const event: Event = {
     async execute(client, message: Message) {
         if(message.author.bot) return;
         //Bot mentioned
-        if(message.content.match(new RegExp(`^<@!${client.user.id}>$`))) {
+        if(message.content.match(new RegExp(`^<@${client.user.id}>$`))) {
             const embed = new MessageEmbed()
                 .setColor('BLURPLE')
                 .setAuthor(client.user.tag, client.user.displayAvatarURL())
