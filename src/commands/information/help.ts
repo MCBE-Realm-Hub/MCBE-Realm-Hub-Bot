@@ -1,6 +1,6 @@
 import { Command } from "../../@types";
 import { MessageEmbed, Collection } from "discord.js";
-import { prefix } from '../../private/settings.json';
+import { commandPrefix } from '../../private/settings.json';
 import { bestStringMatch, compareString } from '../../utils/algorithm';
 import { MS } from "../../utils/ms";
 
@@ -27,7 +27,7 @@ export const command: Command = {
                 .setColor("#2F3136")
                 .setAuthor(client.user.username, client.user.displayAvatarURL({ dynamic : true }))
                 .setTitle(`${client.user.username} Commands`)
-                .setDescription(`Type \`${prefix}help\` \`[command]\` to find out more details about the command.`)
+                .setDescription(`Type \`${commandPrefix}help\` \`[command]\` to find out more details about the command.`)
                 .addField("📚 Information", categoryCommands(commands, "Information"), true)
                 .addField("📌 Important", categoryCommands(commands, "Important"), true)
             message.channel.send({ embeds: [allCommandEmbed] });
@@ -39,7 +39,7 @@ export const command: Command = {
 					.setColor("#2F3136")
 					.setAuthor(client.user.username, client.user.displayAvatarURL({ dynamic : true }))
 					.setTitle(`Category: \`${msg.toUpperCase()}\``)
-					.setDescription(`Type \`${prefix}help\` \`[command]\` to find out more details about the command.`)
+					.setDescription(`Type \`${commandPrefix}help\` \`[command]\` to find out more details about the command.`)
 					.addField('Commands: ', categoryCommands, true)
 					.setTimestamp();
 				return message.channel.send({ embeds: [categoryCommandEmbed] });
@@ -59,14 +59,14 @@ export const command: Command = {
 			if(infoCommand.dmOnly) data.push(`Command usable in \`DMs\` only!`);
 			const commandInfoEmbed = new MessageEmbed()
 				.setColor("#2F3136")
-				.setAuthor(`Command: ${prefix}${infoCommand.name} ${infoCommand.usage ? infoCommand.usage : ''}`)
+				.setAuthor(`Command: ${commandPrefix}${infoCommand.name} ${infoCommand.usage ? infoCommand.usage : ''}`)
 				.setDescription(data.join('\n'));
 			if(infoCommand.category) commandInfoEmbed.addField(`**Category:**`, `\`${infoCommand.category}\``, true);
 			if(infoCommand.name) commandInfoEmbed.addField(`**Command:**`, `\`${infoCommand.name}\``, true);
 			if(infoCommand.aliases) commandInfoEmbed.addField(`**Aliases:**`, `\`${infoCommand.aliases.join(', ')}\``, true);
 			if(infoCommand.description) commandInfoEmbed.addField(`**Description:**`, `\`${infoCommand.description}\``, true);
-			if(infoCommand.usage) commandInfoEmbed.addField(`**Usage:**`, `\`${prefix}${infoCommand.name} ${infoCommand.usage}\``, true);
-			if(infoCommand.example) commandInfoEmbed.addField(`**Example:**`, `\`${prefix}${infoCommand.example.join(`\n${prefix}`)}\``, true);
+			if(infoCommand.usage) commandInfoEmbed.addField(`**Usage:**`, `\`${commandPrefix}${infoCommand.name} ${infoCommand.usage}\``, true);
+			if(infoCommand.example) commandInfoEmbed.addField(`**Example:**`, `\`${commandPrefix}${infoCommand.example.join(`\n${commandPrefix}`)}\``, true);
 			commandInfoEmbed.addField(`**Cooldown:**`, MS(MS(infoCommand.cooldown ? infoCommand.cooldown : '3 seconds'), { compactDuration: false }));
 			message.channel.send({ embeds: [commandInfoEmbed] });
         };

@@ -1,6 +1,6 @@
 import { Event } from "../../@types/index";
 import { Message, MessageEmbed } from 'discord.js';
-import { prefix, ID } from '../../private/settings.json';
+import { commandPrefix, ID } from '../../private/settings.json';
 
 export const event: Event = {
     name: 'messageCreate',
@@ -11,7 +11,7 @@ export const event: Event = {
             const embed = new MessageEmbed()
                 .setColor('BLURPLE')
                 .setAuthor(client.user.tag, client.user.displayAvatarURL())
-                .setDescription(`Hello I'm ${client.user.username}!\nMy prefix is \`${prefix}\`\nType \`${prefix}help\` to get a list of my commands!`)
+                .setDescription(`Hello I'm ${client.user.username}!\nMy prefix is \`${commandPrefix}\`\nType \`${commandPrefix}help\` to get a list of my commands!`)
                 .setTimestamp();
             message.reply({ embeds: [embed] });
         };

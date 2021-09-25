@@ -1,7 +1,7 @@
 import { Command } from "../../@types";
 import { MessageEmbed, TextChannel } from "discord.js";
 import color from '../../assets/hex_colors.json';
-import { prefix } from '../../private/settings.json';
+import { commandPrefix } from '../../private/settings.json';
 import { MS } from "../../utils/ms";
 import { cooldowns } from "../../events/client/commandHandler";
 import { sleep } from "../../utils/scheduling";
@@ -21,7 +21,7 @@ export const command: Command = {
     description: 'Use this command to submit a post in "MCBE Realm Hub" server that will tell others you are looking to hire!',
     cooldown: '1 hour',
     async execute(client, message, args) {
-        const dmChannel = await message.channel.send(`Hey, I will guide you through the process of uploading a hiring post! You may **cancel** this process anytime by simply typing \`${prefix}cancel\`.`);
+        const dmChannel = await message.channel.send(`Hey, I will guide you through the process of uploading a hiring post! You may **cancel** this process anytime by simply typing \`${commandPrefix}cancel\`.`);
         const filter = (msg: any) => msg.author.id === message.author.id;
         const collector = dmChannel.channel.createMessageCollector({ filter, time: MS('59 minutes') });
 
@@ -36,7 +36,7 @@ export const command: Command = {
         collector.on('collect', async msg => {
             if(msg.attachments.size) return;
             const collectedMsg = msg.content;
-            if(collectedMsg.toLowerCase() === `${prefix}cancel`) {
+            if(collectedMsg.toLowerCase() === `${commandPrefix}cancel`) {
                 const timestamp: any = cooldowns.get(command.name);
                 timestamp.delete(message.author.id);
                 return collector.stop('canceled');

@@ -1,6 +1,6 @@
 import { Event } from "../../@types/index";
 import { Message, Collection } from 'discord.js';
-import { prefix } from '../../private/settings.json';
+import { commandPrefix } from '../../private/settings.json';
 import { MS } from "../../utils/ms";
 
 export const cooldowns = new Collection();
@@ -10,9 +10,9 @@ export const event: Event = {
     async execute(client, message: Message) {
         if(message.author.bot) return;
 
-        if(!message.content.startsWith(prefix)) return;
+        if(!message.content.startsWith(commandPrefix)) return;
 
-        const args = message.content.slice(prefix.length).trim().split(/ +/);
+        const args = message.content.slice(commandPrefix.length).trim().split(/ +/);
         const commandName = args.shift().toLowerCase();
         const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName)); 
         if(!command) return;
