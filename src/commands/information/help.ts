@@ -27,7 +27,7 @@ export const command: Command = {
                 .setColor("#2F3136")
                 .setAuthor(client.user.username, client.user.displayAvatarURL({ dynamic : true }))
                 .setTitle(`${client.user.username} Commands`)
-                .setDescription(`Type \`${commandPrefix}help\` \`[command]\` to find out more details about the command.`)
+                .setDescription(`Type \`${commandPrefix}help\` \`[command OR category]\` to find out more details.`)
                 .addField("📚 Information", categoryCommands(commands, "Information"), true)
                 .addField("📌 Important", categoryCommands(commands, "Important"), true)
             message.channel.send({ embeds: [allCommandEmbed] });
