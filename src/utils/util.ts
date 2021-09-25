@@ -17,6 +17,10 @@ function toBytes(bytes: number): string {
     return `${parseFloat((bytes / Math.pow(1024, i)).toFixed(2))} ${sizes[i]}`;
 };
 
+function trimString(string: string, maxLength: number): string {
+    return string.length > maxLength ? `${string.substring(0, maxLength)}...` : string;
+};
+
 function trimArray(array: Array<any>, maxLength: number): Array<any> {
     if(array.length > maxLength) {
         const length = array.length - maxLength;
@@ -34,4 +38,4 @@ function compressNumber(number: number): string | number {
     return scaled.toFixed(1) + types[selectType];
 };
 
-export { snowflake, toBytes, trimArray, compressNumber };
+export { snowflake, toBytes, trimString, trimArray, compressNumber };
