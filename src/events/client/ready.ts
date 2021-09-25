@@ -23,10 +23,6 @@ export const event: Event = {
             {
                 statusType: "LISTENING",
                 statusMessage: `to ${client.channels.cache.size} channels`
-            },
-            {
-                statusType: "WATCHING",
-                statusMessage: `over ${client.guilds.cache.size} servers`
             }
         ];
         var onIndex = 1;
