@@ -1,6 +1,7 @@
 import { Event } from "../../@types/index";
 import { Message, MessageEmbed } from 'discord.js';
 import { commandPrefix, ID } from '../../private/settings.json';
+import { trimString } from "../../utils/util";
 
 export const event: Event = {
     name: 'messageCreate',
@@ -30,7 +31,7 @@ export const event: Event = {
             const embed = new MessageEmbed()
                 .setColor("RANDOM")
                 .setAuthor(message.author.tag, message.author.displayAvatarURL())
-                .setDescription(`\`${message.content.replace(/`/g, '')}\``)
+                .setDescription(`\`${trimString(message.content, 6000).replace(/`/g, '')}\``)
                 .setFooter(message.author.id)
                 .setTimestamp();
             const embedMsg = await message.channel.send({ embeds: [embed] });
