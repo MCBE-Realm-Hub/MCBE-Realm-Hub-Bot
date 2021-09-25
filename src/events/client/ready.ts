@@ -1,5 +1,5 @@
 import { Event, BotStatus } from "../../@types/index";
-import { logins } from '../../private/settings.json';
+import { ID } from '../../private/settings.json';
 
 export const event: Event = {
     name: 'ready',
@@ -8,7 +8,7 @@ export const event: Event = {
         /**
          * Deploy Development slash commands
          */
-        client.deployDevelopmentSlashCommands(logins.developmentSlashCommandGuildID);
+        client.deployDevelopmentSlashCommands(ID.developmentGuild);
         const twitchURL = "https://www.twitch.tv/mcbe_realm_hub";
         const botStatus: Array<BotStatus> = [
             {

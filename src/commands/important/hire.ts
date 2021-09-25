@@ -3,7 +3,7 @@ import { MessageEmbed, TextChannel } from "discord.js";
 import color from '../../assets/hex_colors.json';
 import { prefix } from '../../private/settings.json';
 import { MS } from "../../utils/ms";
-import { cooldowns } from "../../events/server/commandHandler";
+import { cooldowns } from "../../events/client/commandHandler";
 import { sleep } from "../../utils/scheduling";
 
 const yesRegex = /^(\*{2})?yes*(\*{2})?$/i;
