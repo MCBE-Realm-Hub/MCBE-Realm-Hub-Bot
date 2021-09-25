@@ -17,7 +17,11 @@ export const event: Event = {
         };
         //Showcase channel
         if(message.channel.id === ID.showcaseChannel && message.channel.type === 'GUILD_NEWS') {
-            if(!message.attachments.size) return message.delete();
+            try {
+                if(!message.attachments.size && !message.content.match(/^(https?):\/\/[^\s$.?#].[^\s]*$/gm)) return message.delete();
+                await message.react('👍');
+                await message.react('👎');
+            } catch(e) {};
             message.startThread({ name: 'Discussion', autoArchiveDuration: 'MAX' });
             message.crosspost();
         };
@@ -33,9 +37,9 @@ export const event: Event = {
             try {
                 await embedMsg.react('<:upvote:821114922645192704>');
                 await embedMsg.react('<:downvote:821114932049215579>');
-            } catch(e) {}
+                message.delete();
+            } catch(e) {};
             embedMsg.startThread({ name: 'Discussion', autoArchiveDuration: 'MAX' });
-            message.delete();
         };
     }
 };
