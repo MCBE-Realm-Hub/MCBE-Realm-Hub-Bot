@@ -34,8 +34,7 @@ export async function pagedEmbed(message: Message, embedConstructor: MessageEmbe
     };
     const collector = message.channel.createMessageComponentCollector({ filter });
     collector.on('collect', async interaction => {
-        const ID = interaction.first().customId;
-        switch(ID) {
+        switch(interaction.customId) {
             case 'backPage':
                 page === 1 ? page = content.length : page--;
                 interaction.update({ embeds: [setPage()] });
