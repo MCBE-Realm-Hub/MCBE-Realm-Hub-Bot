@@ -8,6 +8,24 @@ import { pagedEmbed } from "../../utils/pagedEmbed";
 function categoryCommands(commands: Collection<string, Command>, category: string): string {
 	return commands.filter((cmd) => cmd.category == category && !cmd.disableCommand).map((cmd) => `\`${cmd.name}\``).sort().join(", ") || "`No commands found`";
 };
+function getCommandData(commands, allCommands: Array<string>): Array<string> {
+	const data = [];
+	allCommands.forEach(cmd => {
+		let infoCommand = commands.get(cmd);
+		let dataStr = '';
+		if(infoCommand.guildOnly) dataStr += 'Command usable in \`Guild\` only!';
+		if(infoCommand.dmOnly) dataStr += 'Command usable in \`DMs\` only!';
+		if(infoCommand.category) dataStr += `\n**Category:** \`${infoCommand.category}\``;
+		if(infoCommand.name) dataStr += `\n**Command:** \`${infoCommand.name}\``;
+		if(infoCommand.aliases) dataStr += `\n**Aliases:** \`${infoCommand.aliases.join(', ')}\``;
+		if(infoCommand.description) dataStr += `\n**Description:** \`${infoCommand.description}\``;
+		if(infoCommand.usage) dataStr += `\n**Usage:** \`${commandPrefix}${infoCommand.name} ${infoCommand.usage}\``;
+		if(infoCommand.example) dataStr += `\n**Example:** \`${commandPrefix}${infoCommand.example.join(`\n${commandPrefix}`)}\``;
+		dataStr += `\n**Cooldown:** ${MS(MS(infoCommand.cooldown ? infoCommand.cooldown : '3 seconds'), { compactDuration: false })}`;
+		data.push(dataStr);
+	});
+	return data;
+};
 
 export const command: Command = {
     category: 'Information',
@@ -22,24 +40,6 @@ export const command: Command = {
 		'help hire'
 	],
     async execute(client, message, args) {
-		const getCommandData = (commands, allCommands: Array<string>): Array<string> => {
-			const data = [];
-			allCommands.forEach(cmd => {
-				let infoCommand = commands.get(cmd);
-				let dataStr = '';
-				if(infoCommand.guildOnly) dataStr += 'Command usable in \`Guild\` only!';
-				if(infoCommand.dmOnly) dataStr += 'Command usable in \`DMs\` only!';
-				if(infoCommand.category) dataStr += `\n**Category:** \`${infoCommand.category}\``;
-				if(infoCommand.name) dataStr += `\n**Command:** \`${infoCommand.name}\``;
-				if(infoCommand.aliases) dataStr += `\n**Aliases:** \`${infoCommand.aliases.join(', ')}\``;
-				if(infoCommand.description) dataStr += `\n**Description:** \`${infoCommand.description}\``;
-				if(infoCommand.usage) dataStr += `\n**Usage:** \`${commandPrefix}${infoCommand.name} ${infoCommand.usage}\``;
-				if(infoCommand.example) dataStr += `\n**Example:** \`${commandPrefix}${infoCommand.example.join(`\n${commandPrefix}`)}\``;
-				dataStr += `\n**Cooldown:** ${MS(MS(infoCommand.cooldown ? infoCommand.cooldown : '3 seconds'), { compactDuration: false })}`;
-				data.push(dataStr);
-			});
-			return data;
-		};
         const commands = client.commands;
         if(!args.length) {
             const allCommandEmbed = new MessageEmbed()
@@ -57,9 +57,7 @@ export const command: Command = {
 					.setColor("#2F3136")
 					.setAuthor(client.user.username, client.user.displayAvatarURL({ dynamic : true }))
 					.setTimestamp();
-			try {
-				if(categoryCommands.length) return pagedEmbed(message, embed, getCommandData(commands, categoryCommands));
-			} catch(e) {};
+			if(categoryCommands.length) return categoryCommands.length > 1 ? pagedEmbed(message, embed, getCommandData(commands, categoryCommands)) : message.channel.send({ embeds: [embed.setDescription(getCommandData(commands, categoryCommands)[0])]});
 			
 			let commandArr = commands.map(cmd => cmd.name);
 			const index = bestStringMatch(msg.toLowerCase(), commandArr);
