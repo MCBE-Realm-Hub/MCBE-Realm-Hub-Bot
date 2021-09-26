@@ -1,7 +1,7 @@
 import { MessageEmbed, TextChannel } from "discord.js";
 import color from '../../assets/hex_colors.json';
 import { Command } from "../../@types";
-import { commandPrefix } from '../../private/settings.json';
+import { commandPrefix, ID } from '../../private/settings.json';
 import { MS } from "../../utils/ms";
 import { cooldowns } from "../../events/client/commandHandler";
 import { sleep } from "../../utils/scheduling";
@@ -83,7 +83,7 @@ export const command: Command = {
                     dmChannel.channel.send("Successfully **canceled** the hiring form.");
                 break;
                 case 'finished':
-                    const channel = client.channels.cache.get("889647867583660073") as TextChannel
+                    const channel = client.channels.cache.get(ID.workChannel) as TextChannel
                     channel.send({ embeds: [embed] });
                 break;
             };
