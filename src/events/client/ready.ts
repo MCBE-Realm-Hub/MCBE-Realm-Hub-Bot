@@ -22,7 +22,7 @@ export const event: Event = {
             },
             {
                 statusType: "LISTENING",
-                statusMessage: `to ${client.channels.cache.size} channels`
+                statusMessage: `${client.channels.cache.size} channels`
             }
         ];
         var onIndex = 1;
