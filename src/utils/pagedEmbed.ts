@@ -1,6 +1,22 @@
 import { client } from "../app";
 import { Message, MessageEmbed, MessageActionRow, MessageButton } from "discord.js";
 
+const buttons = new MessageActionRow()
+    .addComponents(
+        new MessageButton()
+            .setCustomId('backPage')
+            .setLabel('⬅️')
+            .setStyle('PRIMARY'),
+        new MessageButton()
+            .setCustomId('frontPage')
+            .setLabel('➡️')
+            .setStyle('PRIMARY'),
+        new MessageButton()
+            .setCustomId('deleteEmbed')
+            .setLabel('🗑️')
+            .setStyle('DANGER')
+    );
+
 export async function pagedEmbed(message: Message, embedConstructor: MessageEmbed, content: Array<string>): Promise<void> {
     let page = 1;
     const setPage = () => {
@@ -8,21 +24,6 @@ export async function pagedEmbed(message: Message, embedConstructor: MessageEmbe
             .setDescription(content[page - 1])
             .setFooter(`Page ${page} of ${content.length}`);
     };
-    const buttons = new MessageActionRow()
-        .addComponents(
-            new MessageButton()
-                .setCustomId('backPage')
-                .setLabel('⬅️')
-                .setStyle('PRIMARY'),
-            new MessageButton()
-                .setCustomId('frontPage')
-                .setLabel('➡️')
-                .setStyle('PRIMARY'),
-            new MessageButton()
-                .setCustomId('deleteEmbed')
-                .setLabel('🗑️')
-                .setStyle('DANGER')
-        );
     const msg = await message.channel.send({ embeds: [setPage()], components: [buttons] });
     client.on('interactionCreate', async interaction => {
         if(!interaction.isButton()) return;
