@@ -33,23 +33,18 @@ export async function pagedEmbed(message: Message, embedConstructor: MessageEmbe
             interaction.reply({ content: 'You may not interact with someone else\'s page!', ephemeral: true })
             return;
         };
-
-        const filter = (i: any) => i.customId === 'backPage' || i.customId === 'frontPage' || i.customId === 'deleteEmbed';
-        const collector = interaction.channel.createMessageComponentCollector({ filter, time: 15000 });
-        collector.on('collect', async interaction => {
-            switch(interaction.customId) {
-                case 'backPage':
-                    page === 1 ? page = content.length : page--;
-                    interaction.update({ embeds: [setPage()] });
-                break;
-                case 'frontPage':
-                    page === content.length ? page = 1 : page++;
-                    interaction.update({ embeds: [setPage()], components: [buttons]});
-                break;
-                case 'deleteEmbed':
-                    msg.delete().catch(() => {});
-                break;
-            };
-        });
+        switch(interaction.customId) {
+            case 'backPage':
+                page === 1 ? page = content.length : page--;
+                interaction.update({ embeds: [setPage()] });
+            break;
+            case 'frontPage':
+                page === content.length ? page = 1 : page++;
+                interaction.update({ embeds: [setPage()], components: [buttons]});
+            break;
+            case 'deleteEmbed':
+                msg.delete().catch(() => {});
+            break;
+        };
     });
 };
