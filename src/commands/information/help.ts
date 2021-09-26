@@ -57,7 +57,9 @@ export const command: Command = {
 					.setColor("#2F3136")
 					.setAuthor(client.user.username, client.user.displayAvatarURL({ dynamic : true }))
 					.setTimestamp();
-			if(categoryCommands.length) return pagedEmbed(message, embed, getCommandData(commands, categoryCommands));
+			try {
+				if(categoryCommands.length) return pagedEmbed(message, embed, getCommandData(commands, categoryCommands));
+			} catch(e) {};
 			
 			let commandArr = commands.map(cmd => cmd.name);
 			const index = bestStringMatch(msg.toLowerCase(), commandArr);
