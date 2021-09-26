@@ -24,7 +24,7 @@ export async function pagedEmbed(message: Message, embedConstructor: MessageEmbe
             .setDescription(content[page - 1])
             .setFooter(`Page ${page} of ${content.length}`);
     };
-    const msg = await message.channel.send({ embeds: [setPage()], components: [buttons] });
+    const msg = await message.channel.send({ embeds: [setPage()], components: [content.length > 1 ? buttons : null] });
     client.on('interactionCreate', async interaction => {
         if(!interaction.isButton()) return;
         if(interaction.user.id !== message.author.id) {
