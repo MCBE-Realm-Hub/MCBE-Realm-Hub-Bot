@@ -58,7 +58,7 @@ export const command: Command = {
                     } else embed.addField('**Ratings: **', collectedMsg);
                 break;
                 case 3:
-                    if(!collectedMsg.match(/^((https?):\/\/)?([w|W]{3}\.)+[a-zA-Z0-9\-\.]{3,}\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/)) {
+                    if(!collectedMsg.match(/(https?:\/\/[^\s]+)/g)) {
                         dmChannel.channel.send('Please provide a valid URL link!');
                         atQuestion--;
                         await sleep(1000);
