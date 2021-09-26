@@ -56,11 +56,8 @@ export const command: Command = {
             const embed = new MessageEmbed()
 					.setColor("#2F3136")
 					.setAuthor(client.user.username, client.user.displayAvatarURL({ dynamic : true }))
-					.setTitle(`Category: \`${msg.toUpperCase()}\``)
 					.setTimestamp();
-			try {
-				if(categoryCommands.length) return pagedEmbed(message, embed, getCommandData(commands, categoryCommands));
-			} catch(e) {};
+			if(categoryCommands.length) return pagedEmbed(message, embed, getCommandData(commands, categoryCommands));
 			
 			let commandArr = commands.map(cmd => cmd.name);
 			const index = bestStringMatch(msg.toLowerCase(), commandArr);
