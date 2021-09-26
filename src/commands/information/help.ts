@@ -3,9 +3,28 @@ import { MessageEmbed, Collection } from "discord.js";
 import { commandPrefix } from '../../private/settings.json';
 import { bestStringMatch, compareString } from '../../utils/algorithm';
 import { MS } from "../../utils/ms";
+import { pagedEmbed } from "../../utils/pagedEmbed";
 
 function categoryCommands(commands: Collection<string, Command>, category: string): string {
 	return commands.filter((cmd) => cmd.category == category && !cmd.disableCommand).map((cmd) => `\`${cmd.name}\``).sort().join(", ") || "`No commands found`";
+};
+function getCommandData(commands, allCommands: Array<string>): Array<string> {
+	const data = [];
+	allCommands.forEach(cmd => {
+		let infoCommand = commands.get(cmd);
+		let dataStr = '';
+		if(infoCommand.guildOnly) dataStr += 'Command usable in \`Guild\` only!';
+		if(infoCommand.dmOnly) dataStr += 'Command usable in \`DMs\` only!';
+		if(infoCommand.category) dataStr += `\n**Category:** \`${infoCommand.category}\``;
+		if(infoCommand.name) dataStr += `\n**Command:** \`${infoCommand.name}\``;
+		if(infoCommand.aliases) dataStr += `\n**Aliases:** \`${infoCommand.aliases.join(', ')}\``;
+		if(infoCommand.description) dataStr += `\n**Description:** \`${infoCommand.description}\``;
+		if(infoCommand.usage) dataStr += `\n**Usage:** \`${commandPrefix}${infoCommand.name} ${infoCommand.usage}\``;
+		if(infoCommand.example) dataStr += `\n**Example:** \`${commandPrefix}${infoCommand.example.join(`\n${commandPrefix}`)}\``;
+		dataStr += `\n**Cooldown:** ${MS(MS(infoCommand.cooldown ? infoCommand.cooldown : '3 seconds'), { compactDuration: false })}`;
+		data.push(dataStr);
+	});
+	return data;
 };
 
 export const command: Command = {
@@ -33,42 +52,19 @@ export const command: Command = {
             message.channel.send({ embeds: [allCommandEmbed] });
         } else {
             const msg = args.join(' ');
-            const categoryCommands = commands.filter(cmd => cmd.category.toLowerCase() === msg.toLowerCase()).map((cmd) => `\`${cmd.name}\``).sort().join(", ");
-            if(categoryCommands) {
-                const categoryCommandEmbed = new MessageEmbed()
+            const categoryCommands = commands.filter(cmd => cmd.category.toLowerCase() === msg.toLowerCase()).map((cmd) => cmd.name).sort();
+            const embed = new MessageEmbed()
 					.setColor("#2F3136")
 					.setAuthor(client.user.username, client.user.displayAvatarURL({ dynamic : true }))
 					.setTitle(`Category: \`${msg.toUpperCase()}\``)
-					.setDescription(`Type \`${commandPrefix}help\` \`[command]\` to find out more details about the command.`)
-					.addField('Commands: ', categoryCommands, true)
 					.setTimestamp();
-				return message.channel.send({ embeds: [categoryCommandEmbed] });
-            };
-            let commandArr = [];
-            commands.map(cmd => {
-                commandArr.push(cmd.name);
-                if(cmd.aliases) commandArr.push(...cmd.aliases);
-            });
-            const index = bestStringMatch(msg.toLowerCase(), commandArr);
-            if(compareString(commandArr[index], msg.toLowerCase()) < 65) return message.channel.send('That\'s not a valid command!');
-            
-            const infoCommand = commands.get(commandArr[index]);
-
-            const data = [];
-			if(infoCommand.guildOnly) data.push(`Command usable in \`Guild\` only!`);
-			if(infoCommand.dmOnly) data.push(`Command usable in \`DMs\` only!`);
-			const commandInfoEmbed = new MessageEmbed()
-				.setColor("#2F3136")
-				.setAuthor(`Command: ${commandPrefix}${infoCommand.name} ${infoCommand.usage ? infoCommand.usage : ''}`)
-				.setDescription(data.join('\n'));
-			if(infoCommand.category) commandInfoEmbed.addField(`**Category:**`, `\`${infoCommand.category}\``, true);
-			if(infoCommand.name) commandInfoEmbed.addField(`**Command:**`, `\`${infoCommand.name}\``, true);
-			if(infoCommand.aliases) commandInfoEmbed.addField(`**Aliases:**`, `\`${infoCommand.aliases.join(', ')}\``, true);
-			if(infoCommand.description) commandInfoEmbed.addField(`**Description:**`, `\`${infoCommand.description}\``, true);
-			if(infoCommand.usage) commandInfoEmbed.addField(`**Usage:**`, `\`${commandPrefix}${infoCommand.name} ${infoCommand.usage}\``, true);
-			if(infoCommand.example) commandInfoEmbed.addField(`**Example:**`, `\`${commandPrefix}${infoCommand.example.join(`\n${commandPrefix}`)}\``, true);
-			commandInfoEmbed.addField(`**Cooldown:**`, MS(MS(infoCommand.cooldown ? infoCommand.cooldown : '3 seconds'), { compactDuration: false }));
-			message.channel.send({ embeds: [commandInfoEmbed] });
+			if(categoryCommands.length) return pagedEmbed(message, embed, getCommandData(commands, categoryCommands));
+			
+			let commandArr = commands.map(cmd => cmd.name);
+			const index = bestStringMatch(msg.toLowerCase(), commandArr);
+			if(compareString(commandArr[index], msg.toLowerCase()) < 65) return message.channel.send('That\'s not a valid command!');
+			embed.setDescription(`${getCommandData(commands, [commandArr[index]])[0]}`);
+			message.channel.send({ embeds: [embed] });
         };
     }
 };
