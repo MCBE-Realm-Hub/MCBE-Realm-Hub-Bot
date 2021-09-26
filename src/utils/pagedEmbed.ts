@@ -27,13 +27,15 @@ export async function pagedEmbed(message: Message, embedConstructor: MessageEmbe
     const msg = content.length > 1 
     ? await message.channel.send({ embeds: [setPage()], components: [buttons] }) 
     : await message.channel.send({ embeds: [setPage()] });
-    client.on('interactionCreate', async interaction => {
-        if(!interaction.isButton()) return;
-        if(interaction.user.id !== message.author.id) {
-            interaction.reply({ content: 'You may not interact with someone else\'s page!', ephemeral: true })
-            return;
-        };
-        switch(interaction.customId) {
+
+    const filter = (interaction) => {
+        if(interaction.user.id === message.author.id) return true;
+        return interaction.reply({ content: 'You may not interact with someone else\'s page!', ephemeral: true });
+    };
+    const collector = message.channel.createMessageComponentCollector({ filter });
+    collector.on('collect', async interaction => {
+        const ID = interaction.first().customId;
+        switch(ID) {
             case 'backPage':
                 page === 1 ? page = content.length : page--;
                 interaction.update({ embeds: [setPage()] });
