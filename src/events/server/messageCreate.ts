@@ -18,8 +18,8 @@ export const event: Event = {
         };
         //Showcase channel
         if(message.channel.id === ID.showcaseChannel && message.channel.type === 'GUILD_NEWS') {
+            if(message.attachments.size < 1) return message.delete();
             try {
-                if(!message.attachments.size) return message.delete();
                 await message.react('👍');
                 await message.react('👎');
             } catch(e) {};
