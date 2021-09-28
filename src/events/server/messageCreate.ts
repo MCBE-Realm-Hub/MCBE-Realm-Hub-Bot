@@ -19,7 +19,7 @@ export const event: Event = {
         //Showcase channel
         if(message.channel.id === ID.showcaseChannel && message.channel.type === 'GUILD_NEWS') {
             try {
-                if(!message.attachments.size && !message.content.match(/^(https?):\/\/[^\s$.?#].[^\s]*$/gm)) return message.delete();
+                if(message.attachments.size === 0 && !message.content.match(/^(https?):\/\/[^\s$.?#].[^\s]*$/gm)) return message.delete();
                 await message.react('👍');
                 await message.react('👎');
             } catch(e) {};
