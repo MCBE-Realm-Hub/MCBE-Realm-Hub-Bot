@@ -52,7 +52,7 @@ export const event: Event = {
                 : JSON.stringify(content.data)
             );
             if(!obfuscatedJSON) return message.reply('An error occurred while trying to validate the JSON');
-            message.reply({ files: [createFile(`${obfuscatedJSON}`, `mcbe-realm-hub-obfuscation.json`)] });
+            message.reply({ content: 'Since you have uploaded a JSON file named `request-obfuscation.json`, I have obfuscated the JSON file for you.', files: [createFile(`${obfuscatedJSON}`, `mcbe-realm-hub-obfuscation.json`)] });
         };
     }
 };
