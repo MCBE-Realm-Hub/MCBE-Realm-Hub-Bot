@@ -7,7 +7,7 @@
     "node": "16.7.0"
   },
   "scripts": {
-    "start": "npx ts-node .",
+    "bot": "npx ts-node .",
     "watch": "tsc -p tsconfig.json -w",
     "dev": "ts-node-dev --respawn --transpile-only --poll ./src/app.ts"
   },
@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@discordjs/builders": "^0.6.0",
+    "axios": "^0.22.0",
     "chalk": "^2.4.2",
     "discord.js": "^13.1.0",
     "moment": "^2.29.1",
