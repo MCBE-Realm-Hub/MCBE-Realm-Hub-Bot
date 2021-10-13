@@ -7,7 +7,7 @@
     "node": "16.7.0"
   },
   "scripts": {
-    "bot": "npx ts-node .",
+    "start": "npx ts-node .",
     "watch": "tsc -p tsconfig.json -w",
     "dev": "ts-node-dev --respawn --transpile-only --poll ./src/app.ts"
   },
