@@ -8,6 +8,8 @@ export const client = new Client({
         Intents.FLAGS.DIRECT_MESSAGES,
         Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS
     ], 
-    partials: ["CHANNEL"]
+    partials: ["CHANNEL"],
+    failIfNotExists: false
 });
+
 client.init(process.env.token);

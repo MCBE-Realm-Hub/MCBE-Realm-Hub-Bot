@@ -4,4 +4,4 @@ export interface BotStatus {
     statusMessage: string
 }
 
-type statusType = number | "STREAMING" | "WATCHING" | "LISTENING" | "PLAYING" | "CUSTOM" | "COMPETING"
+type statusType = number | "STREAMING" | "WATCHING" | "LISTENING" | "PLAYING" | "COMPETING"

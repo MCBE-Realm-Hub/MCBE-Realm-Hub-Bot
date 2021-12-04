@@ -1,4 +1,4 @@
-import { Message, MessageEmbed, MessageActionRow, MessageButton } from "discord.js";
+import { Message, MessageEmbed, MessageActionRow, MessageButton, ButtonInteraction } from "discord.js";
 
 const buttons = 
     new MessageActionRow().addComponents(
@@ -29,7 +29,7 @@ export async function paginator(message: Message, embeds: Array<MessageEmbed>): 
     };
 
     const collector = msg.createMessageComponentCollector({ filter });
-    collector.on('collect', async interaction => {
+    collector.on('collect', async (interaction: ButtonInteraction) => {
         switch(interaction.customId) {
             case 'backPage':
                 page === 1 ? page = embeds.length : page--;
