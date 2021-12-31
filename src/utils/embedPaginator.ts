@@ -16,7 +16,7 @@ const buttons =
             .setStyle('DANGER')
     );
 
-export async function embedPaginator(message: Message, embeds: Array<MessageEmbed>): Promise<void> {
+async function embedPaginator(message: Message, embeds: Array<MessageEmbed>): Promise<void> {
     let page = 1;
     const embed = () => {
         return embeds[page - 1].setFooter(`Page ${page} of ${embeds.length}`)
@@ -47,3 +47,5 @@ export async function embedPaginator(message: Message, embeds: Array<MessageEmbe
         };
     });
 };
+
+export { embedPaginator };
