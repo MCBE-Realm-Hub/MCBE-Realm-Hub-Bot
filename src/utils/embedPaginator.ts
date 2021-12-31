@@ -1,4 +1,4 @@
-import { Message, MessageEmbed, MessageActionRow, MessageButton } from "discord.js";
+import { Message, MessageEmbed, MessageActionRow, MessageButton, CommandInteraction, InteractionCollector, MessageComponentInteraction } from "discord.js";
 
 const buttons = 
     new MessageActionRow().addComponents(
@@ -16,19 +16,23 @@ const buttons =
             .setStyle('DANGER')
     );
 
-async function embedPaginator(message: Message, embeds: Array<MessageEmbed>): Promise<void> {
-    let page = 1;
+async function embedPaginator(message: Message, { content, embeds, components, filter }: { content?: string, embeds: Array<MessageEmbed>, components?: Array<MessageActionRow>, filter?: (...args: Array<MessageComponentInteraction>) => boolean | Promise<boolean> }): Promise<void>;
+async function embedPaginator(interaction: CommandInteraction, { content, embeds, components, filter }: { content?: string, embeds: Array<MessageEmbed>, components?: Array<MessageActionRow>, filter?: (...args: Array<MessageComponentInteraction>) => boolean | Promise<boolean> }): Promise<void>;
+async function embedPaginator(message: Message & CommandInteraction, { content, embeds, components, filter }: { content?: string, embeds: Array<MessageEmbed>, components?: Array<MessageActionRow>, filter?: (...args: Array<MessageComponentInteraction>) => boolean | Promise<boolean> }): Promise<void> {
     const embed = () => {
         return embeds[page - 1].setFooter(`Page ${page} of ${embeds.length}`)
     };
-    const msg = await message.channel.send({ embeds: [embed()], components: embeds.length > 1 ? [buttons] : null });
+    let page = 1, msg: Message, collector: InteractionCollector<any>;
+    const allComponents = components ? components : [];
+    if(embeds.length > 1) allComponents.push(buttons);
 
-    const filter = (interaction) => {
-        if(interaction.user.id === message.author.id) return true;
-        return interaction.reply({ content: "You may not interact with someone else's embed!", ephemeral: true });
+    if(message?.author) {
+        msg = await message.channel.send({ content: content ? content : null, embeds: [embed()], components: allComponents ? allComponents : null });
+        collector = msg.createMessageComponentCollector({ filter, componentType: 'BUTTON' })
+    } else if(message?.user) {
+        await message.reply({ content: content ? content : null, embeds: [embed()], components: allComponents ? allComponents : null });
+        collector = message.channel.createMessageComponentCollector({ filter, componentType: 'BUTTON' });
     };
-
-    const collector = msg.createMessageComponentCollector({ filter });
     collector.on('collect', async interaction => {
         switch(interaction.customId) {
             case 'backPage':
@@ -40,9 +44,7 @@ async function embedPaginator(message: Message, embeds: Array<MessageEmbed>): Pr
                 interaction.update({ embeds: [embed()] });
             break;
             case 'deleteEmbed':
-                if(message.channel.type !== 'DM' && message.guild.me.permissions.has('MANAGE_MESSAGES')) 
-                    message.delete();
-                msg.delete().catch(() => {});
+                msg.delete().catch(() => message.deleteReply());
             break;
         };
     });
