@@ -61,6 +61,7 @@ export const command: Command = {
 					.setTimestamp();
 				embeds.push(embed);
 			});
+			// @ts-ignore
 			embedPaginator(message, { embeds, filter: i => {
 				if(i.user.id === message.author.id) return true;
 				i.reply({ content: "You may not interact with someone else's page!", ephemeral: true });
