@@ -1,6 +1,5 @@
 import fetch from 'node-fetch';
 import { snowflake } from '../util';
-
 import Client from '../../client';
 import { FindUser, imageURLOptions } from '../../@types/index';
 

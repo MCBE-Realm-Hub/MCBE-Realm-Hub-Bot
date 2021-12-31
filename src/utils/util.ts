@@ -38,4 +38,10 @@ function compressNumber(number: number): string | number {
     return scaled.toFixed(1) + types[selectType];
 };
 
-export { snowflake, toBytes, trimString, trimArray, compressNumber };
+function escapeToUnicode(value: string) {
+    for(var newString = '', i = 0, unicode: number; !isNaN(unicode = value.charCodeAt(i++));)
+        newString += '\\u' + `0000${unicode.toString(16)}`.slice(-4);
+    return newString;
+};
+
+export { snowflake, toBytes, trimString, trimArray, compressNumber, escapeToUnicode };

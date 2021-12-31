@@ -3,7 +3,6 @@ import { MessageEmbed, TextChannel } from "discord.js";
 import color from '../../assets/hex_colors.json';
 import { commandPrefix, ID } from '../../private/settings.json';
 import { MS } from "../../utils/ms";
-import { cooldowns } from "../../events/client/commandHandler";
 import { sleep } from "../../utils/scheduling";
 
 const yesRegex = /^(\*{2})?yes*(\*{2})?$/i;
@@ -37,7 +36,7 @@ export const command: Command = {
             if(msg.attachments.size) return;
             const collectedMsg = msg.content;
             if(collectedMsg.toLowerCase() === `${commandPrefix}cancel`) {
-                const timestamp: any = cooldowns.get(command.name);
+                const timestamp: any = client.cooldowns.get(command.name);
                 timestamp.delete(message.author.id);
                 return collector.stop('canceled');
             };

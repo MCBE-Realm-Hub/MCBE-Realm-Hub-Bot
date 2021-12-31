@@ -1,14 +1,9 @@
 import { Event, BotStatus } from "../../@types/index";
-import { ID } from '../../private/settings.json';
 
 export const event: Event = {
     name: 'ready',
     once: true,
     async execute(client) {
-        /**
-         * Deploy Development slash commands
-         */
-        client.deployDevelopmentSlashCommands(ID.developmentGuild);
         const twitchURL = "https://www.twitch.tv/mcbe_realm_hub";
         const botStatus: Array<BotStatus> = [
             {

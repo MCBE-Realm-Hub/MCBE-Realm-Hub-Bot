@@ -1,9 +1,14 @@
 import Client from '../client';
+import { CommandInteraction } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
 
 export interface SlashCommand {
-    data: SlashCommandBuilder,
-    execute(client: Client, ...args: any[]): any
+    disableCommand?: boolean,
+    guildOnly?: boolean,
+    dmOnly?: boolean,
+    cooldown?: string,
+    data: any,
+    execute(client: Client, interaction: CommandInteraction): any
 }
 export interface SlashCommandData {
     name: string,

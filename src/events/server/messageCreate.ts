@@ -3,7 +3,20 @@ import { Message, MessageEmbed } from 'discord.js';
 import { commandPrefix, ID } from '../../private/settings.json';
 import { trimString } from "../../utils/util";
 import { createFile, getFileContent } from "../../utils/messageFile";
-import { obfuscateJSON } from "../../utils/obfuscate";
+import { escapeToUnicode } from "../../utils/util";
+
+function obfuscateJSON(json: string) {
+    const stringRegex = /"(?:\\"|.)*?"/g;
+
+    const syntaxArr = json.split(stringRegex);
+    const stringArr = json.match(stringRegex);
+
+    let unicodeArr = [], jsonUnicode = '';
+    stringArr.forEach((str: string) => unicodeArr.push(`"${escapeToUnicode(str.replace(/^"|"$|\\/g, ''))}"`));
+    syntaxArr.map((value: any, index: number) => jsonUnicode += `${value}${unicodeArr[index] ? unicodeArr[index] : ''}`);
+
+    return jsonUnicode;
+};
 
 export const event: Event = {
     name: 'messageCreate',

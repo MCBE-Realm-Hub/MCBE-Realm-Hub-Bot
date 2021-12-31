@@ -3,7 +3,7 @@ import { MessageEmbed, Collection } from "discord.js";
 import color from '../../assets/hex_colors.json';
 import { commandPrefix } from '../../private/settings.json';
 import { MS } from "../../utils/ms";
-import { paginator } from "../../utils/embedPaginator";
+import { embedPaginator } from "../../utils/embedPaginator";
 
 const categoryCommands = (commands: Collection<string, Command>, category: string): string => {
 	return commands.filter((cmd) => cmd.category == category && !cmd.disableCommand).map((cmd) => `\`${cmd.name}\``).sort().join(", ") || "`No commands found`";
@@ -30,9 +30,6 @@ export const command: Command = {
     category: 'Information',
 	name: 'help',
 	description: 'Use this command to get list of all the bot commands or information about a specific command',
-	aliases: [
-		'commands'
-	],
 	usage: '[command name OR category name]',
 	example: [
 		'help',
@@ -64,7 +61,10 @@ export const command: Command = {
 					.setTimestamp();
 				embeds.push(embed);
 			});
-			return paginator(message, embeds);
+			embedPaginator(message, { embeds, filter: i => {
+				if(i.user.id === message.author.id) return true;
+				i.reply({ content: "You may not interact with someone else's page!", ephemeral: true });
+			}});
         };
 	}
 };

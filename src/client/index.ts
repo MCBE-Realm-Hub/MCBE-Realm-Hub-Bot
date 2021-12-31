@@ -7,6 +7,7 @@ import { SlashCommand, SlashCommandData, Command } from "../@types/index";
 import { Logger } from '../utils/logger';
 import { discordAPI } from '../utils/api/discord';
 class ClientExtention extends Client {
+    public cooldowns: Collection<string, Collection<string, number>> = new Collection();
     public slashCommands: Collection<string, SlashCommand> = new Collection();
     public slashCommandData: Array<SlashCommandData> = [];
     public commands: Collection<string, Command> = new Collection();
@@ -15,16 +16,14 @@ class ClientExtention extends Client {
 
     public async init(token: string): Promise<void> {
         this.login(token);
-        /**
-         * Getting to all the event files
-         */
+        // Getting to all the event files
         this._eventHandler('client');
         this._eventHandler('server');
-        /**
-         * Getting all the command files
-         */
+        // Getting all the command files
         this._commandHandler('important');
         this._commandHandler('information');
+        // Getting all the slash command files
+        this._slashCommandHandler('docs');
     };
     /**
      * 
@@ -68,21 +67,27 @@ class ClientExtention extends Client {
             this.logger.success(`[Command] Loaded: ${command.name}`);
         });
     };
+    public deploySlashCommands(): void;
+    public deploySlashCommands(guildID: string): void;
+    public deploySlashCommands(guildID: string, redeploy: boolean): void;
     /**
-     * 
+     * Deploy slash commands to guild(s)
      * @param client Constructed client class
      * @param guildID The guild ID to deploy the commands on
      */
-    public deployDevelopmentSlashCommands(guildID?: string): void {
-        this.application.commands.set([], guildID ?? null);
+    public deploySlashCommands(guildID?: string, redeploy?: boolean): void {
+        if(redeploy) this.application.commands.set([], guildID ?? null);
         this.slashCommandData.forEach((json: SlashCommandData) => {
-            try {
-                this.application.commands.create(json, guildID ?? null);
-                this.logger.success(`[Slash Command] Successfully deployed: ${json?.name}`);
-            } catch(err) {
-                this.logger.error(err);
-            };
+            this.application.commands.create(json, guildID ?? null);
+            this.logger.success(`[Slash Command] Successfully deployed: ${json?.name}`);
         });
+    };
+    /**
+     * Remove slash commands from guild(s)
+     * @param guildID  The guild ID to remove the slash commands from
+     */
+    public omitSlashCommands(guildID?: string): void {
+        this.application.commands.set([], guildID ?? null);
     };
 };
 

@@ -1,4 +1,8 @@
-function compareString(firstStr: string, secondStr: string): number {
+function compareString(firstStr: string, secondStr: string, caseInsensitive?: boolean): number {
+    if(caseInsensitive) {
+        firstStr = firstStr.toLowerCase();
+        secondStr = secondStr.toLowerCase();
+    };
     firstStr = firstStr.replace(/\s+/g, '');
     secondStr = secondStr.replace(/\s+/g, '');
 
@@ -24,16 +28,17 @@ function compareString(firstStr: string, secondStr: string): number {
     return Math.floor((2.0 * intersectionSize) / (firstStr.length + secondStr.length - 2) * 100);
 };
 
-function bestStringMatch(mainString: string, targetArray: Array<string>): number {
+function bestStringMatch(mainString: string, targetArray: Array<string>, caseInsensitive?: boolean): { index: number, match: number } {
     const bestSoFar = [];
-    let bestMatchIndex = 0;
+    let bestMatch = { index: 0, match: 0 };
 
     for(let i = 0; i < targetArray.length; i++) {
-        const currentBest = compareString(mainString, targetArray[i]);
-        bestSoFar.push({target: targetArray[i], rating: currentBest});
-        if(currentBest > bestSoFar[bestMatchIndex ? bestMatchIndex : 0].rating) bestMatchIndex = i;
+        const currentBest = compareString(mainString, targetArray[i], caseInsensitive);
+        bestSoFar.push({ target: targetArray[i], match: currentBest });
+        const match = bestSoFar[bestMatch.index ? bestMatch.index : 0].match;
+        if(currentBest > match) bestMatch = { index: i, match };
     };
-    return bestMatchIndex;
+    return bestMatch;
 };
 
 export { compareString, bestStringMatch };

@@ -3,8 +3,6 @@ import { Message, Collection } from 'discord.js';
 import { commandPrefix } from '../../private/settings.json';
 import { MS } from "../../utils/ms";
 
-export const cooldowns = new Collection();
-
 export const event: Event = {
     name: 'messageCreate',
     async execute(client, message: Message) {
@@ -21,9 +19,9 @@ export const event: Event = {
         if(command.guildOnly && message.channel.type === 'DM') return message.reply('The command cannot be used outside of guilds!').then(msg => setTimeout(() => msg.delete(), 10000));
         if(command.dmOnly && message.channel.type !== 'DM') return message.reply('The command cannot be used outside of DMs!').then(msg => setTimeout(() => msg.delete(), 10000));
         
-        if(!cooldowns.has(command.name)) cooldowns.set(command.name, new Collection());
+        if(!client.cooldowns.has(command.name)) client.cooldowns.set(command.name, new Collection());
         const now = Date.now();
-        const timestamps: any = cooldowns.get(command.name);
+        const timestamps: Collection<string, number> = client.cooldowns.get(command.name);
         const cooldownAmount = MS(command.cooldown || '3000');
 
         if(timestamps.has(message.author.id)) {
