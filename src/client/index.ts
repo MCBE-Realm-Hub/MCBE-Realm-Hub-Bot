@@ -22,8 +22,6 @@ class ClientExtention extends Client {
         // Getting all the command files
         this._commandHandler('important');
         this._commandHandler('information');
-        // Getting all the slash command files
-        this._slashCommandHandler('docs');
     };
     /**
      * 
