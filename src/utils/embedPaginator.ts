@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Message, MessageEmbed, MessageActionRow, MessageButton, CommandInteraction, InteractionCollector, MessageComponentInteraction } from "discord.js";
 
 const buttons = 
