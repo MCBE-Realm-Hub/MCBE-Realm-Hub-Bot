@@ -1,4 +1,7 @@
-import { Event, BotStatus } from "../../@types/index";
+import {
+    Event,
+    BotStatus
+} from "../../@types";
 
 export const event: Event = {
     name: 'ready',
@@ -32,5 +35,6 @@ export const event: Event = {
         setInterval(randomStatus, 15000);
         randomStatus();
         client.logger.success(`${client.user.username} is online!`);
+        //client.application.commands.set([]);
     }
 };

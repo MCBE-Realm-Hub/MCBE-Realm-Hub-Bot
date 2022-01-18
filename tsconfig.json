@@ -12,9 +12,10 @@
         "allowSyntheticDefaultImports": true,
         "skipLibCheck": true,
         "skipDefaultLibCheck": true,
-        "declaration": true,
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "pretty": true,
+        "preserveConstEnums": true
     },
-    "include": ["src"],
+    "include": ["src", "scripts"],
     "exclude": ["node_modules"]
 }
