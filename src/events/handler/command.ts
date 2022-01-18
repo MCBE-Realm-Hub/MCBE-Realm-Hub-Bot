@@ -15,8 +15,8 @@ export const event: Event = {
         if(!command) return;
 
         if(command.disableCommand) return;
-        if(command.guildOnly && interaction.channel.type === 'DM') return interaction.reply({ content: 'The command cannot be used outside of guilds!', ephemeral: true });
-        if(command.dmOnly && interaction.channel.type !== 'DM') return interaction.reply({ content: 'The command cannot be used outside of DMs!', ephemeral: true });
+        if(command.guildOnly && interaction.channel?.type === 'DM') return interaction.reply({ content: 'The command cannot be used outside of guilds!', ephemeral: true });
+        if(command.dmOnly && interaction.channel?.type !== 'DM') return interaction.reply({ content: 'The command cannot be used outside of DMs!', ephemeral: true });
 
         if(!client.cooldowns.has(command.data.name)) client.cooldowns.set(command.data.name, new Collection());
         const now = Date.now();
