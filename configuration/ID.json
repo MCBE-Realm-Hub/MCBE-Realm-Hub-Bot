@@ -8,6 +8,11 @@
         "hireChannel": "821041005033685003",
         "workChannel": "821041141222342696",
         "portfolioChannel": "916785377711386654",
-        "buildsChannel": "923353877884071996"
+        "buildsChannel": "923353877884071996",
+        "suggestion_threads": {
+            "portfolio": "937609513584975923",
+            "community": "937610106957352980",
+            "discord": "937610237798674463"
+        }
     }
 }
