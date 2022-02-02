@@ -9,7 +9,7 @@ export const event: Event = {
     async execute(client, message: Message) {
         if(message.channel.id === channelID.showcaseChannel && message.channel.type === 'GUILD_NEWS') {
             if(!message.attachments.size && !message.content.match(/^(https?):\/\/[^\s$.?#].[^\s]*$/gm)) return message.delete().catch(() => {});
-            message.react('👍');
+            message.react('938528965780439040');
             message.startThread({ name: `${message.author.username}‘s creation`, autoArchiveDuration: 'MAX' });
             message.crosspost();
         };
