@@ -19,19 +19,19 @@ export const event: Event = {
                     new MessageButton()
                         .setLabel('Portfolio')
                         .setStyle('SECONDARY')
-                        .setCustomId('null'),
+                        .setCustomId('null1'),
                     new MessageButton()
                         .setLabel('Rules')
                         .setStyle('SUCCESS')
-                        .setCustomId('null'),
+                        .setCustomId('null2'),
                     new MessageButton()
                         .setLabel('Help')
                         .setStyle('SECONDARY')
-                        .setCustomId('null'),
+                        .setCustomId('null3'),
                     new MessageButton()
                         .setLabel('Verify')
                         .setStyle('SUCCESS')
-                        .setCustomId('null')
+                        .setCustomId('null4')
                 )
             message.channel.send({
                 embeds: embeds,
