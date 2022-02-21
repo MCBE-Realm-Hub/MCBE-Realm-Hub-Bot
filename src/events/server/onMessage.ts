@@ -5,7 +5,7 @@ import {
 import { Event } from "../../@types/index";
 import Filter from 'bad-words'
 
-var filter = new Filter();
+var filter = new Filter({ replaceRegex: /[A-Za-z0-9가-힣_]/g });
 
 export const event: Event = {
     name: 'messageCreate',
