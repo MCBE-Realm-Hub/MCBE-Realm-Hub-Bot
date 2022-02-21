@@ -19,22 +19,22 @@ export const event: Event = {
                     new MessageButton()
                         .setLabel('Rules')
                         .setStyle('LINK')
-                        .setEmoji('945273629321609227')
+                        .setEmoji('📎')
                         .setURL('https://discord.com/channels/753438334663000116/786296742789906442'),
                     new MessageButton()
                         .setLabel('Portfolio')
                         .setStyle('LINK')
-                        .setEmoji('945273613823651890')
+                        .setEmoji('📦')
                         .setURL('https://discord.com/channels/753438334663000116/916785377711386654'),
                     new MessageButton()
                         .setLabel('Help')
                         .setStyle('LINK')
-                        .setEmoji('945273607444111370')
+                        .setEmoji('💡')
                         .setURL('https://discord.com/channels/753438334663000116/793419815792148521'),
                     new MessageButton()
                         .setLabel('Verify')
                         .setStyle('SUCCESS')
-                        .setEmoji('945273595888807956')
+                        .setEmoji('✅')
                         .setCustomId('verify')
                 )
             message.channel.send({
