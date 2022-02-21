@@ -1,7 +1,6 @@
 import Client from './client';
 import { Intents } from 'discord.js';
 import dotenv from 'dotenv';
-import { database } from './database/database';
 
 dotenv.config();
 
@@ -17,5 +16,3 @@ export const client = new Client({
 });
 
 client.init(process.env.BOT_TOKEN);
-
-export { database };
