@@ -26,5 +26,19 @@ export const event: Event = {
                 components: [row]
             })
         }
+        if (message.content == '!sendstaff') {
+            var row = new MessageActionRow()
+                .addComponents(
+                    new MessageButton()
+                        .setLabel('Apply')
+                        .setStyle('LINK')
+                        .setEmoji('945419732985712751')
+                        .setURL('https://docs.google.com/forms/d/e/1FAIpQLSd5avDCOReL9IcgXctRi7IywJGrMv9ZpZ90ZDxm7Fz0O74fiw/viewform')
+                )
+            message.channel.send({
+                embeds: staffembed,
+                components: [row]
+            })
+        }
     }
 };
