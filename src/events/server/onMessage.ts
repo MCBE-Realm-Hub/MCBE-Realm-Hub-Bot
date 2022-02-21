@@ -1,9 +1,7 @@
 import {
     Message,
-    MessageEmbed
 } from 'discord.js';
 
-import { accent } from '../../../assets/color/hex.json';
 import { Event } from "../../@types/index";
 import Filter from 'bad-words'
 
