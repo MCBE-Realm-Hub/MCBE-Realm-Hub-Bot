@@ -17,21 +17,25 @@ export const event: Event = {
             var row = new MessageActionRow()
                 .addComponents(
                     new MessageButton()
-                        .setLabel('Portfolio')
-                        .setStyle('SECONDARY')
-                        .setCustomId('null1'),
-                    new MessageButton()
                         .setLabel('Rules')
-                        .setStyle('SUCCESS')
-                        .setCustomId('null2'),
+                        .setStyle('LINK')
+                        .setEmoji('945273629321609227')
+                        .setURL('https://discord.com/channels/753438334663000116/786296742789906442'),
+                    new MessageButton()
+                        .setLabel('Portfolio')
+                        .setStyle('LINK')
+                        .setEmoji('945273613823651890')
+                        .setURL('https://discord.com/channels/753438334663000116/916785377711386654'),
                     new MessageButton()
                         .setLabel('Help')
-                        .setStyle('SECONDARY')
-                        .setCustomId('null3'),
+                        .setStyle('LINK')
+                        .setEmoji('945273607444111370')
+                        .setURL('https://discord.com/channels/753438334663000116/793419815792148521'),
                     new MessageButton()
                         .setLabel('Verify')
                         .setStyle('SUCCESS')
-                        .setCustomId('null4')
+                        .setEmoji('945273595888807956')
+                        .setCustomId('verify')
                 )
             message.channel.send({
                 embeds: embeds,
