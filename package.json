@@ -27,14 +27,17 @@
     "@discordjs/rest": "^0.2.0-canary.0",
     "@xboxreplay/xboxlive-auth": "^4.0.0",
     "axios": "^0.24.0",
+    "bad-words": "^3.0.4",
     "chalk": "^2.4.2",
     "discord.js": "^13.6.0",
     "dotenv": "^12.0.3",
     "json-obfuscator": "^2.0.2",
     "moment": "^2.29.1",
+    "sequelize": "^6.16.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@types/bad-words": "^3.0.1",
     "@types/uuid": "^8.3.4",
     "ts-node": "^10.4.0",
     "ts-node-dev": "^1.1.8",
