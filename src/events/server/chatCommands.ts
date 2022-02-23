@@ -36,6 +36,7 @@ export const event: Event = {
                         .setEmoji('945419732985712751')
                         .setURL('https://docs.google.com/forms/d/e/1FAIpQLSd5avDCOReL9IcgXctRi7IywJGrMv9ZpZ90ZDxm7Fz0O74fiw/viewform')
                         .setDisabled(false)
+                        //test
                 )
             message.channel.send({
                 embeds: staffembed,
