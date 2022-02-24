@@ -225,6 +225,14 @@ export const event: Event = {
         }
         if (message.content == '!sendportrealmpacks') {
             var row = new MessageActionRow()
+            .addComponents(
+                new MessageButton()
+                    .setLabel('rhlicence.pdf')
+                    .setStyle('LINK')
+                    .setEmoji('944017637036417064')
+                    .setURL('https://docs.google.com/document/d/1pyKa02n_X3VISl3Tv10rM3hYE1XYfuuBQR4oTShwG1Q/edit?usp=sharing')
+                    .setDisabled(false)
+            )
             message.channel.send({
                 embeds: portrealmpacks,
                 components: [row]
@@ -232,6 +240,14 @@ export const event: Event = {
         }
         if (message.content == '!sendportgametestpacks') {
             var row = new MessageActionRow()
+            .addComponents(
+                new MessageButton()
+                    .setLabel('rhlicence.pdf')
+                    .setStyle('LINK')
+                    .setEmoji('944017637036417064')
+                    .setURL('https://docs.google.com/document/d/1pyKa02n_X3VISl3Tv10rM3hYE1XYfuuBQR4oTShwG1Q/edit?usp=sharing')
+                    .setDisabled(false)
+            )
             message.channel.send({
                 embeds: portgametestpacks,
                 components: [row]
@@ -239,6 +255,14 @@ export const event: Event = {
         }
         if (message.content == '!sendportdocpacks') {
             var row = new MessageActionRow()
+            .addComponents(
+                new MessageButton()
+                    .setLabel('rhlicence.pdf')
+                    .setStyle('LINK')
+                    .setEmoji('944017637036417064')
+                    .setURL('https://docs.google.com/document/d/1pyKa02n_X3VISl3Tv10rM3hYE1XYfuuBQR4oTShwG1Q/edit?usp=sharing')
+                    .setDisabled(false)
+            )
             message.channel.send({
                 embeds: portdocpacks,
                 components: [row]
