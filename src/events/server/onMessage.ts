@@ -48,9 +48,10 @@ let badWords:string[] = [
 'prozzy',
 'proz',
 'curry muncher',
+'weird'
 ]
 
-var filter = new Filter({ replaceRegex: /[A-Za-z0-9가-힣_]/g, emptyList: true, list: badWords });
+var filter = new Filter({ replaceRegex: /[A-Za-z0-9가-힣_]/g, list: badWords });
 
 export const event: Event = {
     name: 'messageCreate',
