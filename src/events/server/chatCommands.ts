@@ -53,21 +53,21 @@ export const event: Event = {
                         .setLabel('Realm Packs')
                         .setStyle('LINK')
                         .setEmoji('944017636726046760')
-                        .setURL('https://discordapp.com/channels/753438334663000116/916785377711386654')
+                        .setURL('https://discordapp.com/channels/753438334663000116/946507535563755571')
                         .setDisabled(false),
 
                     new MessageButton()
                         .setLabel('Gametest Packs')
                         .setStyle('LINK')
                         .setEmoji('944017636726046760')
-                        .setURL('https://discordapp.com/channels/753438334663000116/916785377711386654')
+                        .setURL('https://discordapp.com/channels/753438334663000116/946507591725502534')
                         .setDisabled(false),
 
                     new MessageButton()
                         .setLabel('Documentations')
                         .setStyle('LINK')
                         .setEmoji('944017636726046760')
-                        .setURL('https://discordapp.com/channels/753438334663000116/916785377711386654')
+                        .setURL('https://discordapp.com/channels/753438334663000116/946507721614692372')
                         .setDisabled(false)
                 )
             message.channel.send({
