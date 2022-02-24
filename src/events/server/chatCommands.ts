@@ -68,7 +68,7 @@ export const event: Event = {
                         .setLabel('rhlicence.pdf')
                         .setStyle('LINK')
                         .setEmoji('944017637036417064')
-                        .setURL('null')
+                        .setURL('https://discordapp.com/channels/753438334663000116/916785377711386654')
                         .setDisabled(false)
                 )
             message.channel.send({
