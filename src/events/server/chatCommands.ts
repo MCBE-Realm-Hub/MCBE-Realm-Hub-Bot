@@ -69,6 +69,13 @@ export const event: Event = {
                         .setStyle('LINK')
                         .setEmoji('944017637036417064')
                         .setURL('https://discordapp.com/channels/753438334663000116/916785377711386654')
+                        .setDisabled(false),
+
+                    new MessageButton()
+                        .setLabel('Contribute')
+                        .setStyle('LINK')
+                        .setEmoji('944017636772171836')
+                        .setURL('https://discordapp.com/channels/753438334663000116/939388876307439616')
                         .setDisabled(false)
                 )
             message.channel.send({
