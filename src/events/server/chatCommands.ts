@@ -54,6 +54,20 @@ export const event: Event = {
                         .setStyle('LINK')
                         .setEmoji('944017636726046760')
                         .setURL('https://discordapp.com/channels/753438334663000116/916785377711386654')
+                        .setDisabled(false),
+
+                    new MessageButton()
+                        .setLabel('Gametest Packs')
+                        .setStyle('LINK')
+                        .setEmoji('944017636726046760')
+                        .setURL('https://discordapp.com/channels/753438334663000116/916785377711386654')
+                        .setDisabled(false),
+
+                    new MessageButton()
+                        .setLabel('Documentations')
+                        .setStyle('LINK')
+                        .setEmoji('944017636726046760')
+                        .setURL('https://discordapp.com/channels/753438334663000116/916785377711386654')
                         .setDisabled(false)
                 )
             message.channel.send({
@@ -68,7 +82,7 @@ export const event: Event = {
                         .setLabel('rhlicence.pdf')
                         .setStyle('LINK')
                         .setEmoji('944017637036417064')
-                        .setURL('https://discordapp.com/channels/753438334663000116/916785377711386654')
+                        .setURL('https://docs.google.com/document/d/1pyKa02n_X3VISl3Tv10rM3hYE1XYfuuBQR4oTShwG1Q/edit?usp=sharing')
                         .setDisabled(false),
 
                     new MessageButton()
