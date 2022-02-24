@@ -51,7 +51,7 @@ let badWords:string[] = [
 'weird'
 ]
 
-var filter = new Filter({ replaceRegex: /[A-Za-z0-9가-힣_]/g, list: badWords, emptyList: true });
+var filter = new Filter({ replaceRegex: /[A-Za-z0-9가-힣_]/g, list: badWords });
 
 export const event: Event = {
     name: 'messageCreate',
