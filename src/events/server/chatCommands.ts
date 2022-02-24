@@ -79,7 +79,7 @@ var portgametestpacks = [{
 },
 {
     "title": ":package:  **Gametest Packs**",
-    "description": "Listed below are out open source Gametest packs. Make sure Gametest features are turned on while applying these packs. \n:newspaper2: Having Realm Issues? Read over **[Realm Help](https://discordapp.com/channels/753438334663000116/918614235431465010)**",
+    "description": "Listed below are our open source Gametest packs. Make sure __Gametest Futures__ are turned on when using these packs. \n:newspaper2: Having Realm Issues? Read over **[Realm Help](https://discordapp.com/channels/753438334663000116/918614235431465010)**",
     "color": 3092790,
     "image": {
         "url": "https://media.discordapp.net/attachments/945191743572279326/945198211436535818/Untitled.png?width=1217&height=26"
@@ -90,12 +90,12 @@ var portgametestpacks = [{
     "fields": [
         {
             "name": "**#Main Packs**\n~",
-            "value": "**[Advanced command handeler](https://discordapp.com/channels/753438334663000116/916785775046193224)**\n**[BeWss](https://discordapp.com/channels/753438334663000116/916785775046193224)**\n**[Chat filter](https://discordapp.com/channels/753438334663000116/916785775046193224)**\n**[Floating leaderboards](https://discordapp.com/channels/753438334663000116/916785775046193224)**\n**[Gametest database](https://discordapp.com/channels/753438334663000116/916785775046193224)**\n**[Gametest starter pack](https://discordapp.com/channels/753438334663000116/916785775046193224)**\n**[AHome warps](https://discordapp.com/channels/753438334663000116/916785775046193224)**\n**[Inventory viewer](https://discordapp.com/channels/753438334663000116/916785775046193224)**\n**[Afk detector](https://discordapp.com/channels/753438334663000116/916785775046193224)**\nㅤ",
+            "value": "**[Advanced command handeler](https://discordapp.com/channels/753438334663000116/925138910735126538)**\n**[BeWss](https://discordapp.com/channels/753438334663000116/946507591725502534)**\n**[Chat filter](https://discordapp.com/channels/753438334663000116/926266379768823859)**\n**[Floating leaderboards](https://discordapp.com/channels/753438334663000116/916791762771673159)**\n**[Gametest database](https://discordapp.com/channels/753438334663000116/916805947287040100)**\n**[Gametest starter pack](https://discordapp.com/channels/753438334663000116/916806063364374650)**\n**[Home warps](https://discordapp.com/channels/753438334663000116/916787332047315034)**\n**[Inventory viewer](https://discordapp.com/channels/753438334663000116/916791168203903068)**\nㅤ",
             "inline": true
         },
         {
             "name": "**#Beta Packs**\n~",
-            "value": "**[Anti-32k](https://discordapp.com/channels/753438334663000116/916785775046193224)**\n**[Shop-api](https://discordapp.com/channels/753438334663000116/916785775046193224)**",
+            "value": "**[Anti-32k](https://discordapp.com/channels/753438334663000116/939229954560893039)**\n**[Shop-api](https://discordapp.com/channels/753438334663000116/939376455316545657)**",
             "inline": true
         }
     ],
