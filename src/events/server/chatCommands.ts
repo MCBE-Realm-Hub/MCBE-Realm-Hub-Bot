@@ -79,7 +79,7 @@ var portgametestpacks = [{
 },
 {
     "title": ":package:  **Gametest Packs**",
-    "description": "Listed below are our open source Gametest packs. Make sure __Gametest Futures__ are turned on when using these packs. \n:newspaper2: Having Realm Issues? Read over **[Realm Help](https://discordapp.com/channels/753438334663000116/918614235431465010)**",
+    "description": "Listed below are out open source Gametest packs. Make sure Gametest features are turned on while applying these packs. \n:newspaper2: Having Realm Issues? Read over **[Realm Help](https://discordapp.com/channels/753438334663000116/918614235431465010)**",
     "color": 3092790,
     "image": {
         "url": "https://media.discordapp.net/attachments/945191743572279326/945198211436535818/Untitled.png?width=1217&height=26"
