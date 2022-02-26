@@ -165,7 +165,7 @@ export const event: Event = {
                         .setStyle('LINK')
                         .setEmoji('945419732985712751')
                         .setURL('https://docs.google.com/forms/d/e/1FAIpQLSd5avDCOReL9IcgXctRi7IywJGrMv9ZpZ90ZDxm7Fz0O74fiw/viewform')
-                        .setDisabled(false)
+                        .setDisabled(true)
                 )
             message.channel.send({
                 embeds: staffembed,
@@ -179,22 +179,19 @@ export const event: Event = {
                         .setLabel('Realm Packs')
                         .setStyle('LINK')
                         .setEmoji('944017636726046760')
-                        .setURL('https://discordapp.com/channels/753438334663000116/946507535563755571')
-                        .setDisabled(false),
+                        .setURL('https://discordapp.com/channels/753438334663000116/946507535563755571'),
 
                     new MessageButton()
                         .setLabel('Gametest Packs')
                         .setStyle('LINK')
                         .setEmoji('944017636726046760')
-                        .setURL('https://discordapp.com/channels/753438334663000116/946507591725502534')
-                        .setDisabled(false),
+                        .setURL('https://discordapp.com/channels/753438334663000116/946507591725502534'),
 
                     new MessageButton()
                         .setLabel('Documentations')
                         .setStyle('LINK')
                         .setEmoji('944017636726046760')
                         .setURL('https://discordapp.com/channels/753438334663000116/946507721614692372')
-                        .setDisabled(false)
                 )
             message.channel.send({
                 embeds: portembed,
@@ -231,7 +228,6 @@ export const event: Event = {
                         .setStyle('LINK')
                         .setEmoji('944017637036417064')
                         .setURL('https://docs.google.com/document/d/1pyKa02n_X3VISl3Tv10rM3hYE1XYfuuBQR4oTShwG1Q/edit?usp=sharing')
-                        .setDisabled(false)
                 )
             message.channel.send({
                 embeds: portrealmpacks,
@@ -246,7 +242,6 @@ export const event: Event = {
                         .setStyle('LINK')
                         .setEmoji('944017637036417064')
                         .setURL('https://docs.google.com/document/d/1pyKa02n_X3VISl3Tv10rM3hYE1XYfuuBQR4oTShwG1Q/edit?usp=sharing')
-                        .setDisabled(false)
                 )
             message.channel.send({
                 embeds: portgametestpacks,
@@ -261,7 +256,6 @@ export const event: Event = {
                         .setStyle('LINK')
                         .setEmoji('944017637036417064')
                         .setURL('https://docs.google.com/document/d/1pyKa02n_X3VISl3Tv10rM3hYE1XYfuuBQR4oTShwG1Q/edit?usp=sharing')
-                        .setDisabled(false)
                 )
             message.channel.send({
                 embeds: portdocpacks,
