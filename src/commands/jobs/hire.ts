@@ -82,7 +82,7 @@ export const command: Command = {
                 case 'finished':
                     const channel = client.channels.cache.get(channelID.hireChannel) as TextChannel;
                     const message = await channel.send({ embeds: [embed] });
-                    message.startThread({ name: `${message.author.username}‘s post`, autoArchiveDuration: 'MAX' });
+                    message.startThread({ name: `${interaction.user.username}‘s post`, autoArchiveDuration: 'MAX' });
                 break;
             };
         });
