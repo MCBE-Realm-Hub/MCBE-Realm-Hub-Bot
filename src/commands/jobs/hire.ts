@@ -26,6 +26,14 @@ export const command: Command = {
         .setName('hire')
         .setDescription('Submit an hiring post to MCBE Realm Hub server.'),
     async execute(client, interaction) {
+
+       let member = await client.guild.get('753438334663000116').members.fetch(interaction.user.id)
+
+       if(!member || !member.roles.cache.has('953741470714716231'))
+         return interaction.reply({
+           'you must be jobs verified to use this command!'
+        })
+
         interaction.reply({ content: 'Hey, I will guide you through the process of uploading a hiring post! You may **cancel** this process anytime by simply typing "\`CANCEL\`".' });
         
         const collector = interaction.channel.createMessageCollector({ filter: msg => msg.author.id === interaction.user.id, time: MS('59 minutes') });
