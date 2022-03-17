@@ -148,7 +148,7 @@ export const event: Event = {
                         .setLabel('Verify')
                         .setStyle('SUCCESS')
                         .setEmoji('945392251486490644')
-                        .setCustomId('verify')
+                        .setCustomId('jobVerify')
                 )
             message.channel.send({
                 embeds: jobembed,
