@@ -13,11 +13,16 @@ export const event: Event = {
       interaction.guild.members.fetch(interaction.user.id).then(member => {
         if(member.roles.cache.has('953741470714716231'))
           return interaction.reply({
-            content: 'you have already verified for the job section!',
+            content: 'you have already verified for the job list!',
             ephemeral: true
           })
         
         member.roles.add('953741470714716231')
+        
+        return interaction.reply({
+            content: 'you have been verified for the job list!',
+            ephemeral: true
+          })
      })
    }
 };
