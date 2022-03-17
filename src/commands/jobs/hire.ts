@@ -27,7 +27,7 @@ export const command: Command = {
         .setDescription('Submit an hiring post to MCBE Realm Hub server.'),
     async execute(client, interaction) {
 
-       let member = await client.guild.get('753438334663000116').members.fetch(interaction.user.id)
+       let member = await client.guilds.get('753438334663000116').members.fetch(interaction.user.id)
 
        if(!member || !member.roles.cache.has('953741470714716231'))
          return interaction.reply({
